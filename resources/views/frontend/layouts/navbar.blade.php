@@ -144,10 +144,8 @@
                 <li><a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a></li>
 
                 @auth
-                    @unless(auth()->user()->isAdmin())
-                        <li><a href="{{ route('customer.dashboard') }}" class="{{ request()->routeIs('customer.dashboard') ? 'active' : '' }}">Dashboard</a></li>
-                        <li><a href="{{ route('bookings.index') }}" class="{{ request()->routeIs('bookings.*') ? 'active' : '' }}">My Bookings</a></li>
-                    @endunless
+                    <li><a href="{{ route('customer.dashboard') }}" class="{{ request()->routeIs('customer.dashboard') ? 'active' : '' }}">Dashboard</a></li>
+                    <li><a href="{{ route('bookings.index') }}" class="{{ request()->routeIs('bookings.*') ? 'active' : '' }}">My Bookings</a></li>
                 @endauth
 
                 <li>
@@ -159,26 +157,24 @@
 
         <div class="nav-right">
             @auth
-                @unless(auth()->user()->isAdmin())
-                    <div class="bell-wrap">
-                        <button type="button" class="bell" data-bell-toggle aria-label="Notifications">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>
-                            </svg>
-                            <span class="bell-count" data-bell-count hidden>0</span>
-                        </button>
-                        <div class="bell-panel" data-bell-panel>
-                            <div class="bell-panel-head">
-                                <strong>Notifications</strong>
-                                <button type="button" data-bell-read-all>Mark all read</button>
-                            </div>
-                            <div class="bell-list" data-bell-list>
-                                <div class="bell-empty">Loading…</div>
-                            </div>
-                            <a href="{{ route('notifications.index') }}" class="bell-foot">View all notifications</a>
+                <div class="bell-wrap">
+                    <button type="button" class="bell" data-bell-toggle aria-label="Notifications">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                            <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+                        </svg>
+                        <span class="bell-count" data-bell-count hidden>0</span>
+                    </button>
+                    <div class="bell-panel" data-bell-panel>
+                        <div class="bell-panel-head">
+                            <strong>Notifications</strong>
+                            <button type="button" data-bell-read-all>Mark all read</button>
                         </div>
+                        <div class="bell-list" data-bell-list>
+                            <div class="bell-empty">Loading…</div>
+                        </div>
+                        <a href="{{ route('notifications.index') }}" class="bell-foot">View all notifications</a>
                     </div>
-                @endunless
+                </div>
 
                 <div class="account">
                     <button type="button" class="account-btn" data-account-toggle>
@@ -192,14 +188,14 @@
                         <span>{{ \Illuminate\Support\Str::limit(auth()->user()->name, 14) }}</span>
                     </button>
                     <div class="account-menu" data-account-menu>
+                        <a href="{{ route('customer.dashboard') }}">Dashboard</a>
+                        <a href="{{ route('bookings.index') }}">My Bookings</a>
+                        <a href="{{ route('reviews.index') }}">My Reviews</a>
+                        <a href="{{ route('profile.index') }}">Profile</a>
+                        <a href="{{ route('notifications.index') }}">Notifications</a>
                         @if(auth()->user()->isAdmin())
+                            <div class="sep"></div>
                             <a href="{{ route('admin.dashboard') }}">Admin Panel</a>
-                        @else
-                            <a href="{{ route('customer.dashboard') }}">Dashboard</a>
-                            <a href="{{ route('bookings.index') }}">My Bookings</a>
-                            <a href="{{ route('reviews.index') }}">My Reviews</a>
-                            <a href="{{ route('profile.index') }}">Profile</a>
-                            <a href="{{ route('notifications.index') }}">Notifications</a>
                         @endif
                         <div class="sep"></div>
                         <form method="POST" action="{{ route('logout') }}">

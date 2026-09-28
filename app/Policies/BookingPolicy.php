@@ -15,18 +15,26 @@ class BookingPolicy
         return $user->isAdmin() || $booking->user_id === $user->id;
     }
 
+    /**
+     * Managing a booking is always limited to its owner, administrators included.
+     */
+    public function owns(User $user, Booking $booking): bool
+    {
+        return $booking->user_id === $user->id;
+    }
+
     public function cancel(User $user, Booking $booking): bool
     {
-        return ! $user->isAdmin() && $booking->user_id === $user->id && $booking->canBeCancelled();
+        return $this->owns($user, $booking) && $booking->canBeCancelled();
     }
 
     public function pay(User $user, Booking $booking): bool
     {
-        return ! $user->isAdmin() && $booking->user_id === $user->id && $booking->canBePaid();
+        return $this->owns($user, $booking) && $booking->canBePaid();
     }
 
     public function review(User $user, Booking $booking): bool
     {
-        return ! $user->isAdmin() && $booking->user_id === $user->id && $booking->canBeReviewed();
+        return $this->owns($user, $booking) && $booking->canBeReviewed();
     }
 }

@@ -24,7 +24,7 @@ class PaymentController extends Controller
      */
     public function create(Booking $booking): View|RedirectResponse
     {
-        $this->authorize('view', $booking);
+        $this->authorize('owns', $booking);
 
         if ($booking->payment_status === Booking::PAYMENT_PAID) {
             return redirect()
@@ -50,7 +50,7 @@ class PaymentController extends Controller
     {
         $booking = Booking::findOrFail($request->integer('booking_id'));
 
-        $this->authorize('view', $booking);
+        $this->authorize('owns', $booking);
 
         if (! $booking->canBePaid()) {
             return redirect()
@@ -94,7 +94,7 @@ class PaymentController extends Controller
      */
     public function success(Payment $payment): View
     {
-        $this->authorize('view', $payment);
+        $this->authorize('owns', $payment);
 
         $payment->load(['paymentMethod', 'booking.vehicle.images', 'booking.vehicle.primaryImage']);
 

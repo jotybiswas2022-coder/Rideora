@@ -55,7 +55,7 @@ class AuthorizationTest extends TestCase
         }
     }
 
-    public function test_administrators_are_redirected_away_from_customer_routes(): void
+    public function test_administrators_can_reach_customer_routes(): void
     {
         $admin = $this->makeAdmin();
 
@@ -66,7 +66,7 @@ class AuthorizationTest extends TestCase
             route('reviews.index'),
             route('notifications.index'),
         ] as $url) {
-            $this->actingAs($admin)->get($url)->assertRedirect(route('admin.dashboard'));
+            $this->actingAs($admin)->get($url)->assertOk();
         }
     }
 
@@ -102,15 +102,28 @@ class AuthorizationTest extends TestCase
         $this->actingAs($owner)->get(route('payments.success', $payment))->assertOk();
     }
 
-    public function test_administrators_cannot_pay_or_cancel_customer_bookings(): void
+    public function test_administrators_cannot_pay_or_cancel_another_customers_booking(): void
     {
         $customer = $this->makeCustomer();
         $admin = $this->makeAdmin();
         $booking = $this->makeBooking($customer, $this->makeVehicle());
 
-        // Admins are redirected out of the customer area before reaching the action.
-        $this->actingAs($admin)->post(route('bookings.cancel', $booking))->assertRedirect(route('admin.dashboard'));
+        // Reaching the customer area is allowed, ownership is not: the policy forbids it.
+        $this->actingAs($admin)->post(route('bookings.cancel', $booking))->assertForbidden();
+        $this->actingAs($admin)->get(route('bookings.payment', $booking))->assertForbidden();
         $this->assertSame('pending', $booking->fresh()->booking_status);
+    }
+
+    public function test_administrators_can_manage_their_own_booking(): void
+    {
+        $admin = $this->makeAdmin();
+        $vehicle = $this->makeVehicle();
+        $booking = $this->makeBooking($admin, $vehicle);
+
+        $this->actingAs($admin)->get(route('bookings.payment', $booking))->assertOk();
+        $this->actingAs($admin)->post(route('bookings.cancel', $booking))
+            ->assertRedirect(route('bookings.show', $booking));
+        $this->assertSame('cancelled', $booking->fresh()->booking_status);
     }
 
     public function test_admin_can_view_the_admin_panel(): void
