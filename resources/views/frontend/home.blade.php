@@ -125,17 +125,24 @@
         .how-grid, .testi-grid, .cat-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 620px) {
-        .how-grid, .testi-grid, .cat-grid, .why-grid, .search-grid { grid-template-columns: 1fr; }
+        .how-grid, .testi-grid, .why-grid, .search-grid { grid-template-columns: 1fr; }
         .hero { padding: 44px 0 52px; }
         .hero h1 { font-size: 1.95rem; }
         .hero p.lead { font-size: 1rem; }
         .hero-stats { gap: 18px 26px; }
         .hero-stat strong { font-size: 1.28rem; }
         .search-card { padding: 20px; }
-        .how-card, .testi-card, .why-card, .cat-card { padding: 18px; }
+        .how-card, .testi-card, .why-card { padding: 18px; }
         .cta { padding: 28px 20px; }
         .cta h2 { font-size: 1.5rem; }
         .cta .btn { width: 100%; }
+
+        /* Keep categories two per row on phones — stack the chip so names stay readable */
+        .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .cat-card { flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 16px 10px; height: 100%; }
+        .cat-body { width: 100%; }
+        .cat-card strong { white-space: normal; overflow: visible; font-size: .88rem; }
+        .cat-card span.muted { font-size: .74rem; }
     }
 
     @media (max-width: 420px) {
