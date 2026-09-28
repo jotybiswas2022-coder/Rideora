@@ -167,7 +167,7 @@
                     <div class="bell-panel" data-bell-panel>
                         <div class="bell-panel-head">
                             <strong>Notifications</strong>
-                            <button type="button" data-bell-read-all>Mark all read</button>
+                            <button type="button" data-bell-read-all hidden>Mark all read</button>
                         </div>
                         <div class="bell-list" data-bell-list>
                             <div class="bell-empty">Loading…</div>
@@ -238,6 +238,7 @@
         var bellToggle = document.querySelector('[data-bell-toggle]');
         var bellList = document.querySelector('[data-bell-list]');
         var bellCount = document.querySelector('[data-bell-count]');
+        var readAll = document.querySelector('[data-bell-read-all]');
         var unread = 0;
 
         function renderBell(data) {
@@ -248,6 +249,8 @@
             } else {
                 bellCount.hidden = true;
             }
+
+            if (readAll) { readAll.hidden = unread === 0; }
 
             if (!data.items.length) {
                 bellList.innerHTML = '<div class="bell-empty">You have no notifications yet.</div>';
@@ -267,8 +270,8 @@
         }
 
         function loadBell() {
-            if (!bellList) { return; }
-            fetch('{{ route('notifications.dropdown') }}', { headers: { 'Accept': 'application/json' } })
+            if (!bellList) { return Promise.resolve(); }
+            return fetch('{{ route('notifications.dropdown') }}', { headers: { 'Accept': 'application/json' } })
                 .then(function (response) { return response.json(); })
                 .then(renderBell)
                 .catch(function () {
@@ -291,16 +294,18 @@
             });
         }
 
-        var readAll = document.querySelector('[data-bell-read-all]');
         if (readAll) {
             readAll.addEventListener('click', function () {
+                readAll.disabled = true;
                 fetch('{{ route('notifications.read-all') }}', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'X-CSRF-TOKEN': csrf
                     }
-                }).then(loadBell);
+                }).then(loadBell).catch(function () {
+                    readAll.disabled = false;
+                });
             });
         }
 
@@ -322,6 +327,13 @@
             });
         }
 
-        document.addEventListener('click', closeAll);
+        // Close on outside clicks only, otherwise clicking a control inside the
+        // panel (e.g. "Mark all read") would shut the panel on the same click.
+        document.addEventListener('click', function (event) {
+            if (event.target.closest('[data-bell-panel], [data-account-menu], [data-bell-toggle], [data-account-toggle]')) {
+                return;
+            }
+            closeAll();
+        });
     });
 </script>
