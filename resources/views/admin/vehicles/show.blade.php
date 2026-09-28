@@ -87,11 +87,11 @@
                         <tbody>
                             @forelse($recentBookings as $booking)
                                 <tr>
-                                    <td><strong>{{ $booking->booking_code }}</strong></td>
-                                    <td>{{ $booking->user->name }}</td>
-                                    <td class="small">{{ $booking->pickup_date->format('d M Y') }} → {{ $booking->return_date->format('d M Y') }}</td>
-                                    <td>{{ bdt($booking->total_amount) }}</td>
-                                    <td>{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
+                                    <td data-label="Booking"><strong>{{ $booking->booking_code }}</strong></td>
+                                    <td data-label="Customer">{{ $booking->user->name }}</td>
+                                    <td class="small" data-label="Dates">{{ $booking->pickup_date->format('d M Y') }} → {{ $booking->return_date->format('d M Y') }}</td>
+                                    <td data-label="Total">{{ bdt($booking->total_amount) }}</td>
+                                    <td data-label="Status">{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
                                     <td><a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-light btn-sm">Open</a></td>
                                 </tr>
                             @empty

@@ -90,7 +90,7 @@
                 <tbody>
                     @forelse($vehicles as $vehicle)
                         <tr>
-                            <td>
+                            <td data-label="Vehicle">
                                 <div class="cell-media">
                                     <img src="{{ $vehicle->imageUrl() }}" alt="{{ $vehicle->name }}">
                                     <span>
@@ -99,22 +99,22 @@
                                     </span>
                                 </div>
                             </td>
-                            <td>{{ $vehicle->category?->name ?? '—' }}</td>
-                            <td>
+                            <td data-label="Category">{{ $vehicle->category?->name ?? '—' }}</td>
+                            <td data-label="Specs">
                                 <div class="cell-specs">
                                     {{ $vehicle->transmission }}<br>
                                     {{ $vehicle->fuel_type }} · {{ $vehicle->seats }} seats
                                 </div>
                             </td>
-                            <td>
+                            <td data-label="Pricing">
                                 <div class="cell-price">
                                     <strong>{{ bdt($vehicle->price_per_day) }} / day</strong>
                                     <span>{{ bdt($vehicle->price_per_hour) }} / hour</span>
                                     <span>Deposit {{ bdt($vehicle->security_deposit) }}</span>
                                 </div>
                             </td>
-                            <td><strong>{{ $vehicle->bookings_count }}</strong></td>
-                            <td>
+                            <td data-label="Bookings"><strong>{{ $vehicle->bookings_count }}</strong></td>
+                            <td data-label="Status">
                                 {!! status_badge($vehicle->statusLabel(), $vehicle->statusClass()) !!}
 
                                 <form method="POST" action="{{ route('admin.vehicles.status', $vehicle) }}" class="mt-8">
@@ -126,7 +126,7 @@
                                     </select>
                                 </form>
                             </td>
-                            <td>
+                            <td data-label="Actions">
                                 <div class="actions">
                                     <a href="{{ route('admin.vehicles.show', $vehicle) }}" class="btn btn-light btn-sm">View</a>
                                     <a href="{{ route('admin.vehicles.edit', $vehicle) }}" class="btn btn-outline btn-sm">Edit</a>

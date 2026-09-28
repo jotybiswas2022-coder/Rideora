@@ -102,36 +102,36 @@
                 <tbody>
                     @forelse($payments as $payment)
                         <tr>
-                            <td>
+                            <td data-label="Booking">
                                 <strong>{{ $payment->booking->booking_code }}</strong>
                                 <span class="muted small" style="display:block;">{{ $payment->booking->vehicle->name }}</span>
                             </td>
-                            <td>
+                            <td data-label="Customer">
                                 <div class="cell-double">
                                     <strong>{{ $payment->user->name }}</strong>
                                     <span>{{ $payment->user->phone ?: '—' }}</span>
                                 </div>
                             </td>
-                            <td>{!! status_badge($payment->paymentMethod?->name ?? '—', 'badge-info') !!}</td>
-                            <td>
+                            <td data-label="Method">{!! status_badge($payment->paymentMethod?->name ?? '—', 'badge-info') !!}</td>
+                            <td data-label="Transaction">
                                 <span class="txn-code">{{ $payment->transaction_id }}</span>
                                 <span class="muted small">{{ $payment->created_at->format('d M Y, g:i A') }}</span>
                             </td>
-                            <td><strong>{{ bdt($payment->amount) }}</strong></td>
-                            <td>
+                            <td data-label="Amount"><strong>{{ bdt($payment->amount) }}</strong></td>
+                            <td data-label="Proof">
                                 @if($payment->proofUrl())
                                     <a href="{{ $payment->proofUrl() }}" target="_blank" rel="noopener" class="btn btn-light btn-sm">View</a>
                                 @else
                                     <span class="muted small">None</span>
                                 @endif
                             </td>
-                            <td>
+                            <td data-label="Status">
                                 {!! status_badge($payment->statusLabel(), $payment->statusClass()) !!}
                                 @if($payment->verifier)
                                     <span class="verifier">by {{ $payment->verifier->name }}</span>
                                 @endif
                             </td>
-                            <td>
+                            <td data-label="Actions">
                                 <div class="actions">
                                     <a href="{{ route('admin.payments.show', $payment) }}" class="btn btn-outline btn-sm">
                                         {{ $payment->status === \App\Models\Payment::STATUS_PENDING ? 'Verify' : 'Open' }}

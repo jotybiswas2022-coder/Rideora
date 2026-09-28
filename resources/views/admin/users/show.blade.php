@@ -90,12 +90,12 @@
                         <tbody>
                             @forelse($bookings as $booking)
                                 <tr>
-                                    <td><strong>{{ $booking->booking_code }}</strong></td>
-                                    <td class="small">{{ $booking->vehicle->name }}</td>
-                                    <td class="small">{{ $booking->pickup_date->format('d M Y') }} → {{ $booking->return_date->format('d M Y') }}</td>
-                                    <td>{{ bdt($booking->total_amount) }}</td>
-                                    <td>{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
-                                    <td>{!! status_badge($booking->paymentStatusLabel(), $booking->paymentStatusClass()) !!}</td>
+                                    <td data-label="Booking"><strong>{{ $booking->booking_code }}</strong></td>
+                                    <td class="small" data-label="Vehicle">{{ $booking->vehicle->name }}</td>
+                                    <td class="small" data-label="Dates">{{ $booking->pickup_date->format('d M Y') }} → {{ $booking->return_date->format('d M Y') }}</td>
+                                    <td data-label="Total">{{ bdt($booking->total_amount) }}</td>
+                                    <td data-label="Status">{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
+                                    <td data-label="Payment">{!! status_badge($booking->paymentStatusLabel(), $booking->paymentStatusClass()) !!}</td>
                                     <td><a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-light btn-sm">Open</a></td>
                                 </tr>
                             @empty
@@ -126,11 +126,11 @@
                         <tbody>
                             @forelse($payments as $payment)
                                 <tr>
-                                    <td><strong>{{ $payment->booking->booking_code }}</strong></td>
-                                    <td class="small">{{ $payment->paymentMethod?->name ?? '—' }}</td>
-                                    <td class="small">{{ $payment->transaction_id }}</td>
-                                    <td>{{ bdt($payment->amount) }}</td>
-                                    <td>{!! status_badge($payment->statusLabel(), $payment->statusClass()) !!}</td>
+                                    <td data-label="Booking"><strong>{{ $payment->booking->booking_code }}</strong></td>
+                                    <td class="small" data-label="Method">{{ $payment->paymentMethod?->name ?? '—' }}</td>
+                                    <td class="small" data-label="Transaction">{{ $payment->transaction_id }}</td>
+                                    <td data-label="Amount">{{ bdt($payment->amount) }}</td>
+                                    <td data-label="Status">{!! status_badge($payment->statusLabel(), $payment->statusClass()) !!}</td>
                                     <td><a href="{{ route('admin.payments.show', $payment) }}" class="btn btn-light btn-sm">Open</a></td>
                                 </tr>
                             @empty

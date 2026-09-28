@@ -44,7 +44,7 @@
                 <tbody>
                     @forelse($methods as $method)
                         <tr>
-                            <td>
+                            <td data-label="Method">
                                 <div class="flex-center">
                                     <span class="method-logo-sm">
                                         {{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::substr($method->name, 0, 3)) }}
@@ -52,11 +52,11 @@
                                     <strong>{{ $method->name }}</strong>
                                 </div>
                             </td>
-                            <td class="cell-note">{{ $method->account_name ?: '—' }}</td>
-                            <td><span class="cell-account">{{ $method->account_number ?: '—' }}</span></td>
-                            <td class="cell-note">{{ \Illuminate\Support\Str::limit($method->instructions, 60) ?: '—' }}</td>
-                            <td><strong>{{ $method->payments_count }}</strong></td>
-                            <td>
+                            <td class="cell-note" data-label="Account name">{{ $method->account_name ?: '—' }}</td>
+                            <td data-label="Account number"><span class="cell-account">{{ $method->account_number ?: '—' }}</span></td>
+                            <td class="cell-note" data-label="Instructions">{{ \Illuminate\Support\Str::limit($method->instructions, 60) ?: '—' }}</td>
+                            <td data-label="Payments"><strong>{{ $method->payments_count }}</strong></td>
+                            <td data-label="Pending">
                                 @php $pending = $pendingPerMethod[$method->id] ?? 0; @endphp
                                 @if($pending > 0)
                                     {!! status_badge($pending.' pending', 'badge-warning') !!}
@@ -64,8 +64,8 @@
                                     <span class="muted small">None</span>
                                 @endif
                             </td>
-                            <td>{!! status_badge(ucfirst($method->status), $method->isActive() ? 'badge-success' : 'badge-muted') !!}</td>
-                            <td>
+                            <td data-label="Status">{!! status_badge(ucfirst($method->status), $method->isActive() ? 'badge-success' : 'badge-muted') !!}</td>
+                            <td data-label="Actions">
                                 <div class="actions">
                                     <a href="{{ route('admin.payment-methods.edit', $method) }}" class="btn btn-outline btn-sm">Edit</a>
                                     <form method="POST" action="{{ route('admin.payment-methods.destroy', $method) }}"

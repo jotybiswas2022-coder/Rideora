@@ -104,32 +104,32 @@
                 <tbody>
                     @forelse($bookings as $booking)
                         <tr>
-                            <td>
+                            <td data-label="Booking">
                                 <strong>{{ $booking->booking_code }}</strong>
                                 <span class="muted small" style="display:block;">{{ $booking->created_at->format('d M Y') }}</span>
                             </td>
-                            <td>
+                            <td data-label="Customer">
                                 <div class="cell-double">
                                     <strong>{{ $booking->user->name }}</strong>
                                     <span>{{ $booking->user->phone ?: '—' }}</span>
                                 </div>
                             </td>
-                            <td>
+                            <td data-label="Vehicle">
                                 <div class="cell-double">
                                     <strong>{{ $booking->vehicle->name }}</strong>
                                     <span>{{ $booking->vehicle->registration_number }}</span>
                                 </div>
                             </td>
-                            <td class="small">
+                            <td class="small" data-label="Rental window">
                                 {{ $booking->pickup_date->format('d M Y') }}<br>
                                 → {{ $booking->return_date->format('d M Y') }}<br>
                                 <span class="muted">{{ $booking->durationLabel() }}</span>
                             </td>
-                            <td>
+                            <td data-label="Total">
                                 <strong>{{ bdt($booking->total_amount) }}</strong>
                                 <span class="muted small" style="display:block;">{{ $booking->paymentStatusLabel() }}</span>
                             </td>
-                            <td>
+                            <td data-label="Booking status">
                                 <form method="POST" action="{{ route('admin.bookings.status', $booking) }}">
                                     @csrf
                                     <select name="booking_status" class="form-control mini-select" onchange="this.form.submit()">
@@ -141,8 +141,8 @@
                                     </select>
                                 </form>
                             </td>
-                            <td>{!! status_badge($booking->paymentStatusLabel(), $booking->paymentStatusClass()) !!}</td>
-                            <td>
+                            <td data-label="Payment">{!! status_badge($booking->paymentStatusLabel(), $booking->paymentStatusClass()) !!}</td>
+                            <td data-label="Actions">
                                 <div class="actions">
                                     <a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-outline btn-sm">Open</a>
                                     @if(! in_array($booking->booking_status, \App\Models\Booking::BLOCKING_STATUSES, true))

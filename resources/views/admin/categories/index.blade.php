@@ -37,19 +37,19 @@
                 <tbody>
                     @forelse($categories as $category)
                         <tr>
-                            <td>
+                            <td data-label="Category">
                                 <div class="flex-center">
                                     <span class="cat-icon">{!! $category->icon ?: '&#128664;' !!}</span>
                                     <strong>{{ $category->name }}</strong>
                                 </div>
                             </td>
-                            <td><span class="cell-slug">{{ $category->slug }}</span></td>
-                            <td class="small">{{ \Illuminate\Support\Str::limit($category->description, 70) ?: '—' }}</td>
-                            <td><strong>{{ $category->vehicles_count }}</strong></td>
-                            <td>
+                            <td data-label="Slug"><span class="cell-slug">{{ $category->slug }}</span></td>
+                            <td class="small" data-label="Description">{{ \Illuminate\Support\Str::limit($category->description, 70) ?: '—' }}</td>
+                            <td data-label="Vehicles"><strong>{{ $category->vehicles_count }}</strong></td>
+                            <td data-label="Status">
                                 {!! status_badge(ucfirst($category->status), $category->isActive() ? 'badge-success' : 'badge-muted') !!}
                             </td>
-                            <td>
+                            <td data-label="Actions">
                                 <div class="actions">
                                     <a href="{{ route('admin.categories.edit', $category) }}" class="btn btn-outline btn-sm">Edit</a>
                                     <form method="POST" action="{{ route('admin.categories.destroy', $category) }}"

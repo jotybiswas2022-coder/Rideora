@@ -80,7 +80,7 @@
                 <tbody>
                     @forelse($customers as $customer)
                         <tr>
-                            <td>
+                            <td data-label="Customer">
                                 <div class="flex-center">
                                     <span class="avatar-mini">
                                         @if($customer->avatar_path)
@@ -95,18 +95,18 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="small">
+                            <td class="small" data-label="Contact">
                                 {{ $customer->email }}<br>
                                 <span class="muted">{{ $customer->phone ?: '—' }}</span>
                             </td>
-                            <td class="small">{{ $customer->city ?: '—' }}</td>
-                            <td><strong>{{ $customer->bookings_count }}</strong></td>
-                            <td>{{ $customer->reviews_count }}</td>
-                            <td class="small">{{ $customer->created_at->format('d M Y') }}</td>
-                            <td>
+                            <td class="small" data-label="City">{{ $customer->city ?: '—' }}</td>
+                            <td data-label="Bookings"><strong>{{ $customer->bookings_count }}</strong></td>
+                            <td data-label="Reviews">{{ $customer->reviews_count }}</td>
+                            <td class="small" data-label="Joined">{{ $customer->created_at->format('d M Y') }}</td>
+                            <td data-label="Status">
                                 {!! status_badge(ucfirst($customer->status), $customer->status === 'active' ? 'badge-success' : 'badge-danger') !!}
                             </td>
-                            <td>
+                            <td data-label="Actions">
                                 <div class="actions">
                                     <a href="{{ route('admin.users.show', $customer) }}" class="btn btn-outline btn-sm">Open</a>
 

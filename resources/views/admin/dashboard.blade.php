@@ -192,14 +192,14 @@
                         <tbody>
                             @forelse($recentBookings as $booking)
                                 <tr>
-                                    <td><strong>{{ $booking->booking_code }}</strong></td>
-                                    <td>{{ $booking->user->name }}</td>
-                                    <td>{{ $booking->vehicle->name }}</td>
-                                    <td class="small">
+                                    <td data-label="Booking"><strong>{{ $booking->booking_code }}</strong></td>
+                                    <td data-label="Customer">{{ $booking->user->name }}</td>
+                                    <td data-label="Vehicle">{{ $booking->vehicle->name }}</td>
+                                    <td class="small" data-label="Dates">
                                         {{ $booking->pickup_date->format('d M') }} → {{ $booking->return_date->format('d M Y') }}
                                     </td>
-                                    <td><strong>{{ bdt($booking->total_amount) }}</strong></td>
-                                    <td>{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
+                                    <td data-label="Total"><strong>{{ bdt($booking->total_amount) }}</strong></td>
+                                    <td data-label="Status">{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
                                     <td>
                                         <a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-outline btn-sm">Open</a>
                                     </td>
@@ -228,7 +228,7 @@
                         <tbody>
                             @forelse($topVehicles as $vehicle)
                                 <tr>
-                                    <td>
+                                    <td data-label="Vehicle">
                                         <div class="cell-media">
                                             <img src="{{ $vehicle->imageUrl() }}" alt="{{ $vehicle->name }}">
                                             <span>
@@ -237,10 +237,10 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td>{{ $vehicle->category?->name ?? '—' }}</td>
-                                    <td>{{ bdt($vehicle->price_per_day) }}</td>
-                                    <td><strong>{{ $vehicle->bookings_count }}</strong></td>
-                                    <td>{!! status_badge($vehicle->statusLabel(), $vehicle->statusClass()) !!}</td>
+                                    <td data-label="Category">{{ $vehicle->category?->name ?? '—' }}</td>
+                                    <td data-label="Daily rate">{{ bdt($vehicle->price_per_day) }}</td>
+                                    <td data-label="Bookings"><strong>{{ $vehicle->bookings_count }}</strong></td>
+                                    <td data-label="Status">{!! status_badge($vehicle->statusLabel(), $vehicle->statusClass()) !!}</td>
                                 </tr>
                             @empty
                                 <tr><td colspan="5" class="text-center muted" style="padding:28px;">No vehicles yet.</td></tr>
