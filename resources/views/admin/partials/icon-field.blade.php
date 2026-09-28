@@ -15,8 +15,8 @@
 
     <datalist id="bootstrap-icon-names">
         @foreach([
-            'car-front', 'car-front-fill', 'suv-front', 'truck', 'truck-front', 'truck-flatbed',
-            'bus-front', 'van', 'scooter', 'motorcycle', 'bicycle', 'truck-front-fill',
+            'car-front', 'car-front-fill', 'truck', 'truck-front', 'truck-flatbed', 'truck-front-fill',
+            'bus-front', 'van', 'scooter', 'motorcycle', 'bicycle', 'train-front',
             'gem', 'lightning-charge', 'stars', 'snow', 'tools', 'shield-check', 'speedometer2',
             'fuel-pump', 'gear', 'grid', 'circle',
         ] as $suggestion)
