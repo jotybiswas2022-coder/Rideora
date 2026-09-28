@@ -149,6 +149,11 @@
                         <li><a href="{{ route('bookings.index') }}" class="{{ request()->routeIs('bookings.*') ? 'active' : '' }}">My Bookings</a></li>
                     @endunless
                 @endauth
+
+                <li>
+                    <a href="{{ auth()->user()?->isAdmin() ? route('admin.dashboard') : route('login') }}"
+                       class="{{ request()->routeIs('admin.*') ? 'active' : '' }}">Admin Panel</a>
+                </li>
             </ul>
         </nav>
 
