@@ -44,18 +44,23 @@
     .how-card h3 { font-size: 1rem; margin-bottom: 6px; }
     .how-card p { font-size: .87rem; color: var(--muted); }
 
-    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
     .cat-card {
         display: flex; align-items: center; gap: 14px; padding: 20px; background: #fff; border: 1px solid var(--border);
-        border-radius: var(--radius-lg); color: var(--text);
+        border-radius: var(--radius-lg); color: var(--text); transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
     }
-    .cat-card:hover { border-color: var(--primary); color: var(--text); box-shadow: var(--shadow); transform: translateY(-2px); transition: .18s ease; }
+    .cat-card:hover { border-color: var(--primary); color: var(--text); box-shadow: var(--shadow); transform: translateY(-2px); }
     .cat-icon {
-        width: 46px; height: 46px; border-radius: 13px; background: var(--primary-soft); color: var(--primary);
-        display: inline-flex; align-items: center; justify-content: center; font-size: 1.15rem; flex-shrink: 0;
+        width: 46px; height: 46px; border-radius: 13px; background: var(--primary-soft);
+        display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+        font-size: 1.25rem; line-height: 1; overflow: hidden;
     }
-    .cat-card strong { display: block; font-size: .95rem; }
-    .cat-card span.muted { font-size: .8rem; }
+    .cat-body { flex: 1; min-width: 0; }
+    .cat-card strong {
+        display: block; font-size: .95rem; color: var(--dark);
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .cat-card span.muted { display: block; font-size: .8rem; }
 
     .why-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
     .why-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
@@ -257,8 +262,8 @@
             <div class="cat-grid">
                 @foreach($categories as $category)
                     <a href="{{ route('vehicles.index', ['category' => $category->slug]) }}" class="cat-card">
-                        <span class="cat-icon">{{ $category->icon ?: '&#128664;' }}</span>
-                        <span>
+                        <span class="cat-icon">{!! $category->icon ?: '&#128664;' !!}</span>
+                        <span class="cat-body">
                             <strong>{{ $category->name }}</strong>
                             <span class="muted">{{ $category->vehicles_count }} {{ \Illuminate\Support\Str::plural('vehicle', $category->vehicles_count) }}</span>
                         </span>
