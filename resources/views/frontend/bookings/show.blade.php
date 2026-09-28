@@ -119,14 +119,14 @@
 
                     @if($booking->customer_note)
                         <div class="alert alert-info mt-24 mb-8">
-                            <span>&#8505;</span>
+                            <span><i class="bi bi-info-circle-fill"></i></span>
                             <div><strong>Your note:</strong> {{ $booking->customer_note }}</div>
                         </div>
                     @endif
 
                     @if($booking->admin_note)
                         <div class="alert alert-warning mt-16 mb-8">
-                            <span>&#9888;</span>
+                            <span><i class="bi bi-exclamation-triangle-fill"></i></span>
                             <div><strong>Note from Rideora:</strong> {{ $booking->admin_note }}</div>
                         </div>
                     @endif
@@ -168,7 +168,7 @@
                     </div>
                 @empty
                     <div class="empty-state" style="padding:28px 0;">
-                        <div class="icon">&#2547;</div>
+                        <div class="icon"><i class="bi bi-cash-stack"></i></div>
                         <h3>No payment submitted yet</h3>
                         <p>Complete the manual payment to confirm this booking.</p>
                         @if($booking->canBePaid())
@@ -234,7 +234,7 @@
 
                     @if($booking->payment_status === \App\Models\Booking::PAYMENT_PENDING)
                         <div class="alert alert-warning mb-8">
-                            <span>&#9203;</span>
+                            <span><i class="bi bi-hourglass-split"></i></span>
                             <div>Your payment is awaiting admin verification.</div>
                         </div>
                     @endif

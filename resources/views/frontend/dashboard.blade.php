@@ -134,7 +134,7 @@
                     </div>
                 @empty
                     <div class="empty-state">
-                        <div class="icon">&#128663;</div>
+                        <div class="icon"><i class="bi bi-car-front"></i></div>
                         <h3>No bookings yet</h3>
                         <p>Browse the fleet and book your first ride.</p>
                         <a href="{{ route('vehicles.index') }}" class="btn btn-primary mt-16">Browse vehicles</a>
@@ -180,7 +180,7 @@
                 <div class="card-body">
                     @forelse($unreadNotifications as $notification)
                         <div class="notice-item">
-                            <span class="notice-ico">{!! $notification->icon() !!}</span>
+                            <span class="notice-ico">{!! bi_icon($notification->icon()) !!}</span>
                             <div>
                                 <strong>{{ $notification->title }}</strong>
                                 <p>{{ \Illuminate\Support\Str::limit($notification->message, 90) }}</p>
@@ -189,7 +189,7 @@
                         </div>
                     @empty
                         <div class="empty-state" style="padding: 24px 0;">
-                            <div class="icon">&#128276;</div>
+                            <div class="icon"><i class="bi bi-bell"></i></div>
                             <p>No new notifications.</p>
                         </div>
                     @endforelse

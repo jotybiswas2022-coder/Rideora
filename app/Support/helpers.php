@@ -34,6 +34,46 @@ if (! function_exists('status_badge')) {
     }
 }
 
+if (! function_exists('bi_icon')) {
+    /**
+     * Render a Bootstrap Icons glyph from its name, e.g. bi_icon('car-front').
+     */
+    function bi_icon(string $name, string $class = ''): string
+    {
+        $safe = preg_replace('/[^a-z0-9-]/', '', strtolower(trim(str_replace('bi-', '', $name))));
+
+        if ($safe === null || $safe === '') {
+            $safe = 'circle';
+        }
+
+        return '<i class="bi bi-'.$safe.($class !== '' ? ' '.$class : '').'"></i>';
+    }
+}
+
+if (! function_exists('category_icon')) {
+    /**
+     * Render a category icon. Accepts a Bootstrap Icons name and still understands
+     * the HTML entities written by older records.
+     */
+    function category_icon(?string $icon, string $fallback = 'car-front'): string
+    {
+        $legacy = [
+            '&#128663;' => 'car-front',
+            '&#128664;' => 'car-front-fill',
+            '&#128665;' => 'grid',
+            '&#128666;' => 'suv-front',
+            '&#128667;' => 'truck-front',
+            '&#128652;' => 'bus-front',
+            '&#127949;' => 'scooter',
+            '&#128142;' => 'gem',
+        ];
+
+        $icon = $icon === null || trim($icon) === '' ? $fallback : $icon;
+
+        return bi_icon($legacy[$icon] ?? $icon);
+    }
+}
+
 if (! function_exists('star_row')) {
     /**
      * Render a row of stars for review ratings.
@@ -43,7 +83,7 @@ if (! function_exists('star_row')) {
         $html = '<span class="stars" aria-label="'.e((string) $rating).' out of '.$outOf.'">';
 
         for ($i = 1; $i <= $outOf; $i++) {
-            $html .= $i <= round($rating) ? '&#9733;' : '&#9734;';
+            $html .= $i <= round($rating) ? bi_icon('star-fill') : bi_icon('star');
         }
 
         return $html.'</span>';

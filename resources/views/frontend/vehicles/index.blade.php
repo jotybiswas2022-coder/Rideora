@@ -264,7 +264,7 @@
 
             @if($vehicles->isEmpty())
                 <div class="card card-pad empty-state">
-                    <div class="icon">&#128269;</div>
+                    <div class="icon"><i class="bi bi-search"></i></div>
                     <h3>No vehicles found</h3>
                     <p>Try widening your dates, price range or removing a filter.</p>
                     <a href="{{ route('vehicles.index') }}" class="btn btn-primary mt-16">Clear all filters</a>

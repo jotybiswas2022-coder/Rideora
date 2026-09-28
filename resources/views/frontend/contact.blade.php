@@ -47,28 +47,28 @@
 
             <ul class="contact-list">
                 <li>
-                    <span class="contact-ico">&#128205;</span>
+                    <span class="contact-ico"><i class="bi bi-geo-alt"></i></span>
                     <span>
                         <strong>Office</strong>
                         <span class="muted">{{ setting('office_address', 'Dhaka, Bangladesh') }}</span>
                     </span>
                 </li>
                 <li>
-                    <span class="contact-ico">&#9742;</span>
+                    <span class="contact-ico"><i class="bi bi-telephone"></i></span>
                     <span>
                         <strong>Phone</strong>
                         <a href="tel:{{ preg_replace('/\s+/', '', setting('support_phone', '')) }}">{{ setting('support_phone', '+880 1700-000000') }}</a>
                     </span>
                 </li>
                 <li>
-                    <span class="contact-ico">&#9993;</span>
+                    <span class="contact-ico"><i class="bi bi-envelope-fill"></i></span>
                     <span>
                         <strong>Email</strong>
                         <a href="mailto:{{ setting('support_email', 'support@rideora.test') }}">{{ setting('support_email', 'support@rideora.test') }}</a>
                     </span>
                 </li>
                 <li>
-                    <span class="contact-ico">&#128179;</span>
+                    <span class="contact-ico"><i class="bi bi-credit-card-2-front"></i></span>
                     <span>
                         <strong>Payments</strong>
                         <span class="muted">bKash, Nagad and bank transfer — verified manually by our team.</span>
@@ -82,10 +82,10 @@
             <p>Fill in the form and our support team will reply by email. For urgent booking changes, please call us.</p>
 
             <ul>
-                <li><span>&#10003;</span> Booking changes and cancellations</li>
-                <li><span>&#10003;</span> Payment verification follow-ups</li>
-                <li><span>&#10003;</span> Long term or corporate rentals</li>
-                <li><span>&#10003;</span> Chauffeur and out-of-city requests</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Booking changes and cancellations</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Payment verification follow-ups</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Long term or corporate rentals</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Chauffeur and out-of-city requests</li>
             </ul>
 
             <div class="hours">

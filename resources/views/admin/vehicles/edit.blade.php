@@ -172,7 +172,7 @@
                 <div class="card-body">
                     @if($vehicle->images->isEmpty())
                         <div class="alert alert-warning">
-                            <span>&#9888;</span>
+                            <span><i class="bi bi-exclamation-triangle-fill"></i></span>
                             <div>This vehicle has no images yet. Upload at least one so it looks good on the website.</div>
                         </div>
                     @else
@@ -205,7 +205,7 @@
                     @endif
 
                     <label class="upload-zone" for="images">
-                        <div style="font-size:1.5rem;">&#128247;</div>
+                        <div style="font-size:1.5rem;"><i class="bi bi-camera"></i></div>
                         <strong style="display:block; margin:6px 0 2px;">Add more images</strong>
                         <span class="muted small">JPG, PNG or WEBP · maximum 4 MB each · up to 8 per upload</span>
                     </label>

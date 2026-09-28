@@ -39,7 +39,7 @@
                         <tr>
                             <td data-label="Category">
                                 <div class="flex-center">
-                                    <span class="cat-icon">{!! $category->icon ?: '&#128664;' !!}</span>
+                                    <span class="cat-icon">{!! category_icon($category->icon) !!}</span>
                                     <strong>{{ $category->name }}</strong>
                                 </div>
                             </td>

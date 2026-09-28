@@ -81,32 +81,32 @@
 
         <div class="value-grid">
             <div class="value-card">
-                <span class="ico">&#128737;</span>
+                <span class="ico"><i class="bi bi-shield-check"></i></span>
                 <h3>Verified vehicles only</h3>
                 <p>Every vehicle in the fleet is registered, inspected and maintained on a schedule before it is listed.</p>
             </div>
             <div class="value-card">
-                <span class="ico">&#128176;</span>
+                <span class="ico"><i class="bi bi-cash-stack"></i></span>
                 <h3>Transparent pricing</h3>
                 <p>Your quote shows the base rental, discount and refundable security deposit before you confirm anything.</p>
             </div>
             <div class="value-card">
-                <span class="ico">&#9989;</span>
+                <span class="ico"><i class="bi bi-check-circle-fill"></i></span>
                 <h3>Real payment verification</h3>
                 <p>There is no automated gateway. A member of our team checks every bKash, Nagad and bank transfer manually.</p>
             </div>
             <div class="value-card">
-                <span class="ico">&#9200;</span>
+                <span class="ico"><i class="bi bi-clock-history"></i></span>
                 <h3>Fast turnaround</h3>
                 <p>Payments are reviewed through the day and confirmed bookings are ready for pickup on schedule.</p>
             </div>
             <div class="value-card">
-                <span class="ico">&#128506;</span>
+                <span class="ico"><i class="bi bi-map"></i></span>
                 <h3>Multiple pickup points</h3>
                 <p>Collect your vehicle in Dhaka, Chattogram or Sylhet — and tell us if you need a different arrangement.</p>
             </div>
             <div class="value-card">
-                <span class="ico">&#128222;</span>
+                <span class="ico"><i class="bi bi-telephone"></i></span>
                 <h3>Support that answers</h3>
                 <p>Our team is reachable by phone, email and the contact form before, during and after your rental.</p>
             </div>

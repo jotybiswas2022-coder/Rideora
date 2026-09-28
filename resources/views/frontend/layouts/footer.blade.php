@@ -85,9 +85,9 @@
             <div>
                 <h4>Contact</h4>
                 <ul class="footer-contact">
-                    <li><span>&#128205;</span><span>{{ setting('office_address', 'Dhaka, Bangladesh') }}</span></li>
-                    <li><span>&#9742;</span><span>{{ setting('support_phone', '+880 1700-000000') }}</span></li>
-                    <li><span>&#9993;</span><span>{{ setting('support_email', 'support@rideora.test') }}</span></li>
+                    <li><span><i class="bi bi-geo-alt"></i></span><span>{{ setting('office_address', 'Dhaka, Bangladesh') }}</span></li>
+                    <li><span><i class="bi bi-telephone"></i></span><span>{{ setting('support_phone', '+880 1700-000000') }}</span></li>
+                    <li><span><i class="bi bi-envelope-fill"></i></span><span>{{ setting('support_email', 'support@rideora.test') }}</span></li>
                 </ul>
             </div>
         </div>

@@ -8,7 +8,6 @@
 <style>
     /* Add category — page specific */
     .narrow-card { max-width: 760px; }
-    .form-hint code { background: #F1F5F9; padding: 1px 6px; border-radius: 5px; font-size: .78rem; }
 </style>
 @endpush
 
@@ -34,11 +33,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="icon">Icon (HTML entity, optional)</label>
-                    <input type="text" id="icon" name="icon" class="form-control @error('icon') is-invalid @enderror"
-                           value="{{ old('icon') }}" placeholder="e.g. &#38;#128663; for a car icon">
-                    <span class="form-hint">Paste an HTML numeric entity such as <code>&amp;#128663;</code> or leave empty.</span>
-                    @error('icon')<span class="form-error">{{ $message }}</span>@enderror
+                    @include('admin.partials.icon-field', ['icon' => null])
                 </div>
 
                 <div class="form-group">

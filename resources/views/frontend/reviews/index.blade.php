@@ -80,7 +80,7 @@
                                     @foreach([5, 4, 3, 2, 1] as $rating)
                                         <input type="radio" id="star-{{ $booking->id }}-{{ $rating }}"
                                                name="rating" value="{{ $rating }}" {{ $rating === 5 ? 'checked' : '' }} required>
-                                        <label for="star-{{ $booking->id }}-{{ $rating }}" title="{{ $rating }} star">&#9733;</label>
+                                        <label for="star-{{ $booking->id }}-{{ $rating }}" title="{{ $rating }} star"><i class="bi bi-star-fill"></i></label>
                                     @endforeach
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                     </div>
                 @empty
                     <div class="empty-state" style="padding:26px 0;">
-                        <div class="icon">&#9733;</div>
+                        <div class="icon"><i class="bi bi-star-fill"></i></div>
                         <p>Nothing to review right now. Reviews unlock once a rental is completed.</p>
                         <a href="{{ route('bookings.index') }}" class="btn btn-outline mt-16">View my bookings</a>
                     </div>
@@ -126,7 +126,7 @@
                     </div>
                 @empty
                     <div class="empty-state" style="padding:26px 0;">
-                        <div class="icon">&#128221;</div>
+                        <div class="icon"><i class="bi bi-pencil-square"></i></div>
                         <p>You have not submitted any reviews yet.</p>
                     </div>
                 @endforelse

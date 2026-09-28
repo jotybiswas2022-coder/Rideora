@@ -148,9 +148,9 @@
                             <strong>{{ $settings['site_name'] ?? 'Rideora' }}</strong>
                             <span class="tagline">{{ $settings['site_tagline'] ?? '' }}</span>
                             <div class="rows">
-                                <span>&#9742; {{ $settings['support_phone'] ?? '' }}</span>
-                                <span>&#9993; {{ $settings['support_email'] ?? '' }}</span>
-                                <span>&#128205; {{ \Illuminate\Support\Str::limit($settings['office_address'] ?? '', 80) }}</span>
+                                <span><i class="bi bi-telephone"></i> {{ $settings['support_phone'] ?? '' }}</span>
+                                <span><i class="bi bi-envelope-fill"></i> {{ $settings['support_email'] ?? '' }}</span>
+                                <span><i class="bi bi-geo-alt"></i> {{ \Illuminate\Support\Str::limit($settings['office_address'] ?? '', 80) }}</span>
                             </div>
                         </div>
                     </div>

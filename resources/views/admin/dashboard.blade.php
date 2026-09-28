@@ -82,19 +82,19 @@
     <!-- ============ Quick actions ============ -->
     <div class="quick-grid">
         <a href="{{ route('admin.vehicles.create') }}" class="quick">
-            <span class="ico">&#43;</span>
+            <span class="ico"><i class="bi bi-plus-lg"></i></span>
             <span><strong>Add vehicle</strong><span>Expand the fleet</span></span>
         </a>
         <a href="{{ route('admin.payments.index', ['status' => 'pending']) }}" class="quick">
-            <span class="ico">&#9989;</span>
+            <span class="ico"><i class="bi bi-check-circle-fill"></i></span>
             <span><strong>Verify payments</strong><span>{{ $stats['pending_payments'] }} waiting</span></span>
         </a>
         <a href="{{ route('admin.bookings.index', ['status' => 'payment_submitted']) }}" class="quick">
-            <span class="ico">&#128203;</span>
+            <span class="ico"><i class="bi bi-clipboard-check"></i></span>
             <span><strong>Review bookings</strong><span>Payment submitted queue</span></span>
         </a>
         <a href="{{ route('admin.reviews.index', ['status' => 'pending']) }}" class="quick">
-            <span class="ico">&#9733;</span>
+            <span class="ico"><i class="bi bi-star-fill"></i></span>
             <span><strong>Moderate reviews</strong><span>{{ $stats['pending_reviews'] }} pending</span></span>
         </a>
     </div>
@@ -276,7 +276,7 @@
                     </div>
                 @empty
                     <div class="empty-state" style="padding:30px 0;">
-                        <div class="icon">&#9989;</div>
+                        <div class="icon"><i class="bi bi-check-circle-fill"></i></div>
                         <h3>All caught up</h3>
                         <p>No payments are waiting for verification.</p>
                     </div>

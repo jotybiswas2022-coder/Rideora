@@ -32,7 +32,7 @@ class NotificationController extends Controller
             'title' => $notification->title,
             'message' => $notification->message,
             'type' => $notification->type,
-            'icon' => $notification->icon(),
+            'icon' => bi_icon($notification->icon()),
             'is_read' => $notification->is_read,
             'time' => $notification->created_at->diffForHumans(),
             'link' => $notification->link ?? route('notifications.index'),

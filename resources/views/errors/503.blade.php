@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="badge">&#128736;</div>
+        <div class="badge"><i class="bi bi-tools"></i></div>
         <h1>Rideora is under maintenance</h1>
         <p>We are performing a scheduled update and will be back shortly. Thank you for your patience.</p>
         <div class="hint">Your Ride, Your Way.</div>

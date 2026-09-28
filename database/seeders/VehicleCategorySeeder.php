@@ -11,14 +11,14 @@ class VehicleCategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Sedan', 'icon' => '&#128663;', 'description' => 'Comfortable four-door cars for city and highway driving.'],
-            ['name' => 'SUV', 'icon' => '&#128666;', 'description' => 'Spacious vehicles built for rough roads and family trips.'],
-            ['name' => 'Hatchback', 'icon' => '&#128664;', 'description' => 'Compact, fuel efficient cars ideal for daily commutes.'],
-            ['name' => 'Microbus', 'icon' => '&#128652;', 'description' => 'Group transport for tours, events and airport transfers.'],
-            ['name' => 'Bike', 'icon' => '&#127949;', 'description' => 'Motorcycles and sport bikes for quick solo rides.'],
-            ['name' => 'Pickup', 'icon' => '&#128667;', 'description' => 'Utility vehicles for cargo and countryside trips.'],
-            ['name' => 'Luxury', 'icon' => '&#128142;', 'description' => 'Premium vehicles for weddings and corporate travel.'],
-            ['name' => 'Other', 'icon' => '&#128665;', 'description' => 'Speciality vehicles that do not fit another category.'],
+            ['name' => 'Sedan', 'icon' => 'car-front', 'description' => 'Comfortable four-door cars for city and highway driving.'],
+            ['name' => 'SUV', 'icon' => 'suv-front', 'description' => 'Spacious vehicles built for rough roads and family trips.'],
+            ['name' => 'Hatchback', 'icon' => 'car-front-fill', 'description' => 'Compact, fuel efficient cars ideal for daily commutes.'],
+            ['name' => 'Microbus', 'icon' => 'bus-front', 'description' => 'Group transport for tours, events and airport transfers.'],
+            ['name' => 'Bike', 'icon' => 'scooter', 'description' => 'Motorcycles and sport bikes for quick solo rides.'],
+            ['name' => 'Pickup', 'icon' => 'truck-front', 'description' => 'Utility vehicles for cargo and countryside trips.'],
+            ['name' => 'Luxury', 'icon' => 'gem', 'description' => 'Premium vehicles for weddings and corporate travel.'],
+            ['name' => 'Other', 'icon' => 'grid', 'description' => 'Speciality vehicles that do not fit another category.'],
         ];
 
         foreach ($categories as $category) {

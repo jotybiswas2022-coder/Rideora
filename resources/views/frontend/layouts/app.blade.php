@@ -7,6 +7,8 @@
     <meta name="description" content="{{ setting('site_name', 'Rideora') }} — {{ setting('site_tagline') }} Reliable vehicles, flexible rentals, simple booking.">
     <title>@yield('title', setting('site_name', 'Rideora').' — '.setting('site_tagline', 'Your Ride, Your Way.'))</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         /* ============ Rideora — shared design system ============ */
         :root {
@@ -56,6 +58,10 @@
         a:hover { color: var(--primary-dark); }
         img { max-width: 100%; display: block; }
         h1, h2, h3, h4 { color: var(--dark); line-height: 1.25; font-weight: 700; }
+
+    /* ============ Icons (Bootstrap Icons) ============ */
+    i[class^="bi-"], i[class*=" bi-"] { line-height: 1; }
+    .ico, .notif-ico, .contact-ico, .v-card-specs li span, .v-card-location span { line-height: 1; display: inline-flex; }
 
         .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 20px; }
         .page-shell { flex: 1; padding: 32px 0 64px; }

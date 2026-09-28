@@ -43,7 +43,7 @@
                 <div class="card-body">
                     @if($vehicle->images->isEmpty())
                         <div class="empty-state" style="padding:26px 0;">
-                            <div class="icon">&#128247;</div>
+                            <div class="icon"><i class="bi bi-camera"></i></div>
                             <p>No images uploaded for this vehicle yet.</p>
                             <a href="{{ route('admin.vehicles.edit', $vehicle) }}" class="btn btn-primary mt-16">Upload images</a>
                         </div>

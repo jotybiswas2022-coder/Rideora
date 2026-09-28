@@ -28,7 +28,7 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="badge">&#128736;</div>
+        <div class="badge"><i class="bi bi-tools"></i></div>
         <div class="code">500</div>
         <h1>Something went wrong on our side</h1>
         <p>We have logged the problem and our team is looking into it. Please try again in a moment.</p>

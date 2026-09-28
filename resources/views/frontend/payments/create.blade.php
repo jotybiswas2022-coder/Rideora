@@ -107,7 +107,7 @@
 
                 @if($paymentMethods->isEmpty())
                     <div class="alert alert-error">
-                        <span>&#9888;</span>
+                        <span><i class="bi bi-exclamation-triangle-fill"></i></span>
                         <div>No payment method is available right now. Please contact support.</div>
                     </div>
                 @else
@@ -163,7 +163,7 @@
                                 <label for="payment_proof">Payment screenshot <span style="color:var(--danger)">*</span></label>
 
                                 <label class="upload-box" for="payment_proof">
-                                    <div style="font-size:1.6rem;">&#128247;</div>
+                                    <div style="font-size:1.6rem;"><i class="bi bi-camera"></i></div>
                                     <strong style="display:block; margin:6px 0 2px; font-size:.92rem;">Click to upload a screenshot</strong>
                                     <span class="muted small">JPG, PNG or WEBP · maximum 3 MB</span>
                                 </label>

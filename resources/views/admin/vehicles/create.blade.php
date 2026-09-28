@@ -181,7 +181,7 @@
 
             <div class="card-body">
                 <label class="upload-zone" for="images">
-                    <div style="font-size:1.7rem;">&#128247;</div>
+                    <div style="font-size:1.7rem;"><i class="bi bi-camera"></i></div>
                     <strong style="display:block; margin:6px 0 2px;">Click to select images</strong>
                     <span class="muted small">The first image becomes the primary image unless you choose another below.</span>
                 </label>

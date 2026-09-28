@@ -28,7 +28,7 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="badge">&#128274;</div>
+        <div class="badge"><i class="bi bi-lock"></i></div>
         <div class="code">403</div>
         <h1>You do not have access to this area</h1>
         <p>This page is restricted. Sign in with the right account or return to a page you can access.</p>

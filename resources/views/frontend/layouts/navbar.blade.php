@@ -213,7 +213,7 @@
                 <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
             @endauth
 
-            <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
+            <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-label="Toggle navigation"><i class="bi bi-list"></i></button>
         </div>
     </div>
 </header>

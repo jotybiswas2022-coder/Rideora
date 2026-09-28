@@ -118,7 +118,7 @@
 
                     @if($method->payments()->exists())
                         <div class="alert alert-info mt-16 mb-8">
-                            <span>&#8505;</span>
+                            <span><i class="bi bi-info-circle-fill"></i></span>
                             <div>This method has payment records, so it cannot be deleted. Set it to inactive instead.</div>
                         </div>
                     @else

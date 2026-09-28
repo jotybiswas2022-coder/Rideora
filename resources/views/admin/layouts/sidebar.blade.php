@@ -73,37 +73,37 @@
     <nav class="sidebar-nav">
         <div class="sidebar-section">Overview</div>
         <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-            <span class="ico">&#128200;</span> Dashboard
+            <span class="ico"><i class="bi bi-graph-up-arrow"></i></span> Dashboard
         </a>
 
         <div class="sidebar-section">Fleet</div>
         <a href="{{ route('admin.vehicles.index') }}" class="sidebar-link {{ request()->routeIs('admin.vehicles.*') ? 'active' : '' }}">
-            <span class="ico">&#128663;</span> Vehicles
+            <span class="ico"><i class="bi bi-car-front"></i></span> Vehicles
         </a>
         <a href="{{ route('admin.categories.index') }}" class="sidebar-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
-            <span class="ico">&#127991;</span> Categories
+            <span class="ico"><i class="bi bi-tags"></i></span> Categories
         </a>
 
         <div class="sidebar-section">Rentals</div>
         <a href="{{ route('admin.bookings.index') }}" class="sidebar-link {{ request()->routeIs('admin.bookings.*') ? 'active' : '' }}">
-            <span class="ico">&#128203;</span> Bookings
+            <span class="ico"><i class="bi bi-clipboard-check"></i></span> Bookings
         </a>
         <a href="{{ route('admin.payments.index') }}" class="sidebar-link {{ request()->routeIs('admin.payments.*') ? 'active' : '' }}">
-            <span class="ico">&#2547;</span> Payments
+            <span class="ico"><i class="bi bi-cash-stack"></i></span> Payments
             @if($pendingPaymentsCount > 0)
                 <span class="pill">{{ $pendingPaymentsCount }}</span>
             @endif
         </a>
         <a href="{{ route('admin.payment-methods.index') }}" class="sidebar-link {{ request()->routeIs('admin.payment-methods.*') ? 'active' : '' }}">
-            <span class="ico">&#128179;</span> Payment Methods
+            <span class="ico"><i class="bi bi-credit-card-2-front"></i></span> Payment Methods
         </a>
 
         <div class="sidebar-section">People</div>
         <a href="{{ route('admin.users.index') }}" class="sidebar-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-            <span class="ico">&#128101;</span> Customers
+            <span class="ico"><i class="bi bi-people"></i></span> Customers
         </a>
         <a href="{{ route('admin.reviews.index') }}" class="sidebar-link {{ request()->routeIs('admin.reviews.*') ? 'active' : '' }}">
-            <span class="ico">&#9733;</span> Reviews
+            <span class="ico"><i class="bi bi-star-fill"></i></span> Reviews
             @if($pendingReviewsCount > 0)
                 <span class="pill">{{ $pendingReviewsCount }}</span>
             @endif
@@ -111,17 +111,17 @@
 
         <div class="sidebar-section">System</div>
         <a href="{{ route('admin.settings.index') }}" class="sidebar-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
-            <span class="ico">&#9881;</span> Website Settings
+            <span class="ico"><i class="bi bi-gear"></i></span> Website Settings
         </a>
         <a href="{{ route('home') }}" class="sidebar-link" target="_blank" rel="noopener">
-            <span class="ico">&#127760;</span> View website
+            <span class="ico"><i class="bi bi-globe2"></i></span> View website
         </a>
     </nav>
 
     <div class="sidebar-foot">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit"><span class="ico">&#128682;</span> Logout</button>
+            <button type="submit"><span class="ico"><i class="bi bi-box-arrow-right"></i></span> Logout</button>
         </form>
     </div>
 </aside>

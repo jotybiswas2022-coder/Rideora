@@ -105,7 +105,7 @@
                                     </span>
                                 </div>
                                 <div class="text-right">
-                                    <div class="review-stars">{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</div>
+                                    <div class="review-stars">{!! star_row($review->rating) !!}</div>
                                     <span class="muted small">{{ $review->created_at->format('d M Y, g:i A') }}</span>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                 </div>
             @empty
                 <div class="empty-state" style="padding:34px 0;">
-                    <div class="icon">&#9733;</div>
+                    <div class="icon"><i class="bi bi-star-fill"></i></div>
                     <h3>No reviews found</h3>
                     <p>Reviews submitted by customers will appear here for moderation.</p>
                 </div>

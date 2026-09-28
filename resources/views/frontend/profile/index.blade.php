@@ -112,7 +112,7 @@
                     </div>
                 @empty
                     <div class="empty-state" style="padding:26px 0;">
-                        <div class="icon">&#128663;</div>
+                        <div class="icon"><i class="bi bi-car-front"></i></div>
                         <p>No bookings yet.</p>
                         <a href="{{ route('vehicles.index') }}" class="btn btn-primary mt-16">Browse vehicles</a>
                     </div>

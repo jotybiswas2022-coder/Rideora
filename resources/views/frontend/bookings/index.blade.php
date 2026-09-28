@@ -153,7 +153,7 @@
         </article>
     @empty
         <div class="card card-pad empty-state">
-            <div class="icon">&#128663;</div>
+            <div class="icon"><i class="bi bi-car-front"></i></div>
             <h3>No bookings found</h3>
             <p>{{ $status ? 'No bookings with this status yet.' : 'You have not booked a vehicle yet.' }}</p>
             <a href="{{ route('vehicles.index') }}" class="btn btn-primary mt-16">Browse vehicles</a>

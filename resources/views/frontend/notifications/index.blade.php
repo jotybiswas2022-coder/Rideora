@@ -53,7 +53,7 @@
 
     @forelse($notifications as $notification)
         <div class="notif {{ $notification->is_read ? '' : 'unread' }}">
-            <span class="notif-ico">{!! $notification->icon() !!}</span>
+            <span class="notif-ico">{!! bi_icon($notification->icon()) !!}</span>
 
             <div class="notif-body">
                 <h3>{{ $notification->title }}</h3>
@@ -87,7 +87,7 @@
         </div>
     @empty
         <div class="card card-pad empty-state">
-            <div class="icon">&#128276;</div>
+            <div class="icon"><i class="bi bi-bell"></i></div>
             <h3>No notifications yet</h3>
             <p>Booking and payment updates will appear here.</p>
             <a href="{{ route('vehicles.index') }}" class="btn btn-primary mt-16">Browse vehicles</a>

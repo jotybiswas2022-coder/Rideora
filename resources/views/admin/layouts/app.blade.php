@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Admin') — {{ setting('site_name', 'Rideora') }}</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <style>
         /* ============ Rideora admin design system ============ */
         :root {
@@ -47,6 +49,9 @@
         a:hover { color: var(--primary-dark); }
         img { max-width: 100%; display: block; }
         h1, h2, h3, h4 { color: var(--dark); font-weight: 700; line-height: 1.25; }
+
+        /* ============ Icons (Bootstrap Icons) ============ */
+        i[class^="bi-"], i[class*=" bi-"] { line-height: 1; }
 
         /* ============ Layout shell ============ */
         .admin-shell { display: flex; min-height: 100vh; }
@@ -174,6 +179,12 @@
         textarea.form-control { min-height: 110px; resize: vertical; }
         select.form-control { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path fill='%2364748b' d='M6 8.5 1.5 4h9z'/></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
         .form-hint { font-size: .76rem; color: var(--muted); }
+        .form-hint code { background: #F1F5F9; padding: 1px 6px; border-radius: 5px; font-size: .78rem; }
+        .icon-field { display: flex; align-items: center; gap: 12px; }
+        .icon-preview {
+            display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; flex-shrink: 0;
+            border-radius: 10px; background: var(--primary-soft); color: var(--primary); font-size: 1.2rem;
+        }
         .form-error { font-size: .76rem; color: var(--danger); font-weight: 600; }
         .checkbox-row { display: flex; align-items: flex-start; gap: 10px; font-size: .85rem; }
         .checkbox-row input { width: 17px; height: 17px; margin-top: 2px; accent-color: var(--primary); flex-shrink: 0; }

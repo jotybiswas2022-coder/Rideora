@@ -4,16 +4,6 @@
 @section('page-title', 'Edit category')
 @section('page-subtitle', $category->name)
 
-@push('styles')
-<style>
-    /* Edit category — page specific */
-    .icon-preview {
-        display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px;
-        border-radius: 10px; background: var(--light); border: 1px solid var(--border); font-size: 1.2rem; vertical-align: middle;
-    }
-</style>
-@endpush
-
 @section('content')
     <div class="grid grid-sidebar">
         <div class="card">
@@ -37,15 +27,7 @@
                         @error('name')<span class="form-error">{{ $message }}</span>@enderror
                     </div>
 
-                    <div class="form-group">
-                        <label for="icon">Icon (HTML entity)</label>
-                        <input type="text" id="icon" name="icon" class="form-control @error('icon') is-invalid @enderror"
-                               value="{{ old('icon', $category->icon) }}">
-                        <span class="form-hint">
-                            Currently renders as: <span class="icon-preview">{!! $category->icon ?: '&#128664;' !!}</span>
-                        </span>
-                        @error('icon')<span class="form-error">{{ $message }}</span>@enderror
-                    </div>
+                    @include('admin.partials.icon-field', ['icon' => $category->icon])
 
                     <div class="form-group">
                         <label for="description">Description</label>

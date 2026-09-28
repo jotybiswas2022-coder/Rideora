@@ -65,7 +65,7 @@
 
                     @if($booking->customer_note)
                         <div class="alert alert-info mt-24 mb-8">
-                            <span>&#8505;</span>
+                            <span><i class="bi bi-info-circle-fill"></i></span>
                             <div><strong>Customer note:</strong> {{ $booking->customer_note }}</div>
                         </div>
                     @endif
@@ -158,7 +158,7 @@
                         </div>
                     @empty
                         <div class="empty-state" style="padding:26px 0;">
-                            <div class="icon">&#2547;</div>
+                            <div class="icon"><i class="bi bi-cash-stack"></i></div>
                             <p>No payment submitted for this booking yet.</p>
                         </div>
                     @endforelse
@@ -254,7 +254,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div style="color:#F59E0B; font-size:1rem;">{{ str_repeat('★', $booking->review->rating) }}{{ str_repeat('☆', 5 - $booking->review->rating) }}</div>
+                        <div style="color:#F59E0B; font-size:1rem;">{!! star_row($booking->review->rating) !!}</div>
                         <p class="small mt-8">{{ $booking->review->comment }}</p>
                     </div>
                 </div>

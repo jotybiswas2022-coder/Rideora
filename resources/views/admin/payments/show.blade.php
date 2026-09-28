@@ -58,7 +58,7 @@
 
                     @if((float) $payment->amount !== (float) $payment->booking->total_amount)
                         <div class="alert alert-warning mt-24 mb-8">
-                            <span>&#9888;</span>
+                            <span><i class="bi bi-exclamation-triangle-fill"></i></span>
                             <div>
                                 The submitted amount ({{ bdt($payment->amount) }}) differs from the booking total
                                 ({{ bdt($payment->booking->total_amount) }}). Verify carefully before approving.
@@ -68,7 +68,7 @@
 
                     @if($payment->admin_note)
                         <div class="alert alert-info mt-16 mb-8">
-                            <span>&#8505;</span>
+                            <span><i class="bi bi-info-circle-fill"></i></span>
                             <div><strong>Admin note on record:</strong> {{ $payment->admin_note }}</div>
                         </div>
                     @endif
@@ -93,7 +93,7 @@
                         </div>
                     @else
                         <div class="proof-missing">
-                            <div style="font-size:1.8rem;">&#128247;</div>
+                            <div style="font-size:1.8rem;"><i class="bi bi-camera"></i></div>
                             <p>No screenshot was attached to this submission.</p>
                         </div>
                     @endif
@@ -148,9 +148,9 @@
                 <div class="card-body">
                     @if($payment->status === \App\Models\Payment::STATUS_PENDING)
                         <ul class="check-list mb-24">
-                            <li><span class="tick">&#10003;</span> Check the transaction ID in your bKash / Nagad / bank statement.</li>
-                            <li><span class="tick">&#10003;</span> Confirm the amount matches the booking total.</li>
-                            <li><span class="tick">&#10003;</span> Confirm the screenshot is a genuine receipt.</li>
+                            <li><span class="tick"><i class="bi bi-check-lg"></i></span> Check the transaction ID in your bKash / Nagad / bank statement.</li>
+                            <li><span class="tick"><i class="bi bi-check-lg"></i></span> Confirm the amount matches the booking total.</li>
+                            <li><span class="tick"><i class="bi bi-check-lg"></i></span> Confirm the screenshot is a genuine receipt.</li>
                         </ul>
 
                         <form method="POST" action="{{ route('admin.payments.verify', $payment) }}" class="stack-16"
@@ -161,7 +161,7 @@
                                 <input type="text" id="verify_note" name="admin_note" class="form-control"
                                        placeholder="e.g. Matched with bank statement">
                             </div>
-                            <button type="submit" class="btn btn-success btn-block btn-lg">&#10003; Verify payment</button>
+                            <button type="submit" class="btn btn-success btn-block btn-lg"><i class="bi bi-check-lg"></i> Verify payment</button>
                         </form>
 
                         <div class="divider"></div>
@@ -178,7 +178,7 @@
                         </form>
                     @else
                         <div class="alert {{ $payment->status === 'verified' ? 'alert-success' : 'alert-error' }}">
-                            <span>{{ $payment->status === 'verified' ? '&#10003;' : '&#9888;' }}</span>
+                            <span>{{ $payment->status === 'verified' ? '<i class="bi bi-check-lg"></i>' : '<i class="bi bi-exclamation-triangle-fill"></i>' }}</span>
                             <div>
                                 This payment was <strong>{{ $payment->status }}</strong>
                                 @if($payment->verifier) by {{ $payment->verifier->name }} @endif

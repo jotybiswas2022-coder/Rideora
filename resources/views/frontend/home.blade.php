@@ -165,9 +165,9 @@
                     <p class="lead">Reliable vehicles. Flexible rentals. Simple booking.</p>
 
                     <div class="hero-pills">
-                        <span class="hero-pill">&#10003; Verified vehicles</span>
-                        <span class="hero-pill">&#10003; Transparent pricing</span>
-                        <span class="hero-pill">&#10003; Manual payment verification</span>
+                        <span class="hero-pill"><i class="bi bi-check-lg"></i> Verified vehicles</span>
+                        <span class="hero-pill"><i class="bi bi-check-lg"></i> Transparent pricing</span>
+                        <span class="hero-pill"><i class="bi bi-check-lg"></i> Manual payment verification</span>
                     </div>
 
                     <div class="hero-stats">
@@ -243,7 +243,7 @@
 
             @if($featuredVehicles->isEmpty())
                 <div class="card card-pad empty-state">
-                    <div class="icon">&#128663;</div>
+                    <div class="icon"><i class="bi bi-car-front"></i></div>
                     <h3>No vehicles published yet</h3>
                     <p>Our fleet is being prepared. Please check back shortly.</p>
                 </div>
@@ -269,7 +269,7 @@
             <div class="cat-grid">
                 @foreach($categories as $category)
                     <a href="{{ route('vehicles.index', ['category' => $category->slug]) }}" class="cat-card">
-                        <span class="cat-icon">{!! $category->icon ?: '&#128664;' !!}</span>
+                        <span class="cat-icon">{!! category_icon($category->icon) !!}</span>
                         <span class="cat-body">
                             <strong>{{ $category->name }}</strong>
                             <span class="muted">{{ $category->vehicles_count }} {{ \Illuminate\Support\Str::plural('vehicle', $category->vehicles_count) }}</span>
@@ -324,27 +324,27 @@
 
             <div class="why-grid">
                 <div class="why-card">
-                    <span class="ico">&#9889;</span>
+                    <span class="ico"><i class="bi bi-lightning-charge-fill"></i></span>
                     <h4>Easy Booking</h4>
                     <p>A short form and a live price summary — nothing more.</p>
                 </div>
                 <div class="why-card">
-                    <span class="ico">&#128737;</span>
+                    <span class="ico"><i class="bi bi-shield-check"></i></span>
                     <h4>Verified Vehicles</h4>
                     <p>Every vehicle is inspected, documented and maintained.</p>
                 </div>
                 <div class="why-card">
-                    <span class="ico">&#128176;</span>
+                    <span class="ico"><i class="bi bi-cash-stack"></i></span>
                     <h4>Transparent Pricing</h4>
                     <p>Base fare, deposit and discount are shown up front.</p>
                 </div>
                 <div class="why-card">
-                    <span class="ico">&#9989;</span>
+                    <span class="ico"><i class="bi bi-check-circle-fill"></i></span>
                     <h4>Manual Payment Verification</h4>
                     <p>Real humans review each payment before confirmation.</p>
                 </div>
                 <div class="why-card">
-                    <span class="ico">&#128736;</span>
+                    <span class="ico"><i class="bi bi-tools"></i></span>
                     <h4>Reliable Service</h4>
                     <p>Support before, during and after your rental period.</p>
                 </div>

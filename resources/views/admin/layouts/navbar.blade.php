@@ -16,7 +16,7 @@
 
 <header class="admin-topbar">
     <div class="topbar-left">
-        <button type="button" class="sidebar-toggle" data-sidebar-toggle aria-label="Toggle sidebar">&#9776;</button>
+        <button type="button" class="sidebar-toggle" data-sidebar-toggle aria-label="Toggle sidebar"><i class="bi bi-list"></i></button>
         <div>
             <h1>@yield('page-title', 'Dashboard')</h1>
             <p>@yield('page-subtitle', 'Manage the Rideora rental platform')</p>
@@ -26,7 +26,7 @@
     <div class="topbar-right">
         <div class="admin-bell">
             <button type="button" data-admin-bell aria-label="Notifications">
-                <span>&#128276;</span>
+                <span><i class="bi bi-bell"></i></span>
                 @if($adminUnread > 0)
                     <span class="count">{{ $adminUnread > 9 ? '9+' : $adminUnread }}</span>
                 @endif

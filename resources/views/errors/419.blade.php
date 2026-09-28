@@ -28,7 +28,7 @@
 </head>
 <body>
     <div class="wrap">
-        <div class="badge">&#9203;</div>
+        <div class="badge"><i class="bi bi-hourglass-split"></i></div>
         <div class="code">419</div>
         <h1>Your session has expired</h1>
         <p>For your security, the page was inactive for too long. Refresh the page and submit the form again.</p>

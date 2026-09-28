@@ -111,10 +111,10 @@
             <h2>Start renting in minutes</h2>
             <p>One account lets you book any vehicle, submit manual payments and track verification status.</p>
             <ul>
-                <li><span>&#10003;</span> Free to register, pay only when you book</li>
-                <li><span>&#10003;</span> Transparent daily and hourly pricing</li>
-                <li><span>&#10003;</span> Manual bKash, Nagad and bank payments</li>
-                <li><span>&#10003;</span> Booking history and notifications</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Free to register, pay only when you book</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Transparent daily and hourly pricing</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Manual bKash, Nagad and bank payments</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Booking history and notifications</li>
             </ul>
         </div>
     </div>

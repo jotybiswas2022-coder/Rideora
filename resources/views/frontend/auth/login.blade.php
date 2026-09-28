@@ -83,10 +83,10 @@
             <h2>Your Ride, Your Way.</h2>
             <p>Sign in to book vehicles, upload your manual payment and follow the verification status in real time.</p>
             <ul>
-                <li><span>&#10003;</span> Track booking and payment status</li>
-                <li><span>&#10003;</span> Re-book your favourite vehicles</li>
-                <li><span>&#10003;</span> Review completed rentals</li>
-                <li><span>&#10003;</span> Notifications for every update</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Track booking and payment status</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Re-book your favourite vehicles</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Review completed rentals</li>
+                <li><span><i class="bi bi-check-lg"></i></span> Notifications for every update</li>
             </ul>
         </div>
     </div>

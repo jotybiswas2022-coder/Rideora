@@ -44,7 +44,7 @@
 
 @section('content')
     <div class="success-hero">
-        <div class="success-icon">&#10003;</div>
+        <div class="success-icon"><i class="bi bi-check-lg"></i></div>
         <h1>Payment submitted for verification</h1>
         <p>
             Thank you, {{ $payment->user->name }}. Your payment for booking

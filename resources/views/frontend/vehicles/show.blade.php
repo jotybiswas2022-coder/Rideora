@@ -181,7 +181,7 @@
                     </div>
                 @empty
                     <div class="empty-state" style="padding:28px 0;">
-                        <div class="icon">&#9733;</div>
+                        <div class="icon"><i class="bi bi-star-fill"></i></div>
                         <h3>No reviews yet</h3>
                         <p>Be the first to rent this vehicle and share your experience.</p>
                     </div>
@@ -309,7 +309,7 @@
                     <h3>Already booked</h3>
                     <ul class="stack-8 small muted">
                         @foreach(array_slice($blocked, 0, 5) as $range)
-                            <li>&#128197; {{ \Carbon\Carbon::parse($range['from'])->format('d M Y') }}
+                            <li><i class="bi bi-calendar-event"></i> {{ \Carbon\Carbon::parse($range['from'])->format('d M Y') }}
                                 &rarr; {{ \Carbon\Carbon::parse($range['to'])->format('d M Y') }}</li>
                         @endforeach
                     </ul>

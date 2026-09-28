@@ -24,13 +24,13 @@
         </div>
 
         <ul class="v-card-specs">
-            <li><span>&#128100;</span>{{ $vehicle->seats }} seats</li>
-            <li><span>&#9881;</span>{{ $vehicle->transmission }}</li>
-            <li><span>&#9981;</span>{{ $vehicle->fuel_type }}</li>
+            <li><span><i class="bi bi-person"></i></span>{{ $vehicle->seats }} seats</li>
+            <li><span><i class="bi bi-gear"></i></span>{{ $vehicle->transmission }}</li>
+            <li><span><i class="bi bi-fuel-pump-fill"></i></span>{{ $vehicle->fuel_type }}</li>
         </ul>
 
         @if($vehicle->location)
-            <p class="v-card-location"><span>&#128205;</span>{{ $vehicle->location }}</p>
+            <p class="v-card-location"><span><i class="bi bi-geo-alt"></i></span>{{ $vehicle->location }}</p>
         @endif
 
         <div class="v-card-foot">

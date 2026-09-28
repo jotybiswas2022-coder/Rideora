@@ -40,10 +40,10 @@ class Notification extends Model
     public function icon(): string
     {
         return match ($this->type) {
-            self::TYPE_PAYMENT => '&#2547;',
-            self::TYPE_BOOKING => '&#128663;',
-            self::TYPE_REVIEW => '&#9733;',
-            default => '&#128276;',
+            self::TYPE_PAYMENT => 'cash-stack',
+            self::TYPE_BOOKING => 'car-front',
+            self::TYPE_REVIEW => 'star-fill',
+            default => 'bell',
         };
     }
 

@@ -62,7 +62,7 @@
 
             @if(! $available)
                 <div class="alert alert-warning">
-                    <span>&#9888;</span>
+                    <span><i class="bi bi-exclamation-triangle-fill"></i></span>
                     <div>This vehicle is already booked for part of the period you selected. Choose different dates to continue.</div>
                 </div>
             @endif
@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="alert alert-info mt-24">
-                    <span>&#8505;</span>
+                    <span><i class="bi bi-info-circle-fill"></i></span>
                     <div>
                         After submitting you will be taken to the manual payment page where you can pay by bKash, Nagad or bank transfer.
                         The total is recalculated on the server, so it always matches your selected dates.
