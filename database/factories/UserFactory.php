@@ -26,10 +26,36 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => '+880 17'.fake()->numerify('##-######'),
+            'city' => fake()->randomElement(['Dhaka', 'Chattogram', 'Sylhet']),
+            'address' => fake()->streetAddress(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('password123'),
+            'is_admin' => false,
+            'status' => 'active',
             'remember_token' => Str::random(10),
         ];
+    }
+
+    /**
+     * An administrator account.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_admin' => true,
+            'status' => 'active',
+        ]);
+    }
+
+    /**
+     * A deactivated customer account.
+     */
+    public function inactive(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'inactive',
+        ]);
     }
 
     /**

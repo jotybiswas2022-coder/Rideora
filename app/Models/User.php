@@ -2,33 +2,32 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var list<string>
      */
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'phone',
+        'address',
+        'city',
+        'driving_license_no',
         'avatar_path',
+        'password',
         'is_admin',
+        'status',
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
      * @var list<string>
      */
     protected $hidden = [
@@ -37,8 +36,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
-     *
      * @return array<string, string>
      */
     protected function casts(): array
@@ -46,84 +43,66 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
         ];
     }
 
-    public function posts(): HasMany
+    // ===== Relationships =====
+
+    public function bookings(): HasMany
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Booking::class);
     }
 
-    public function postReactions(): HasMany
+    public function payments(): HasMany
     {
-        return $this->hasMany(PostReaction::class);
+        return $this->hasMany(Payment::class);
     }
 
-    public function postComments(): HasMany
+    public function reviews(): HasMany
     {
-        return $this->hasMany(PostComment::class);
-    }
-
-    public function postCommentReactions(): HasMany
-    {
-        return $this->hasMany(PostCommentReaction::class);
+        return $this->hasMany(Review::class);
     }
 
     public function notifications(): HasMany
     {
-        return $this->hasMany(Notification::class, 'user_id');
-    }
-
-    // ===== Friend Request Relationships =====
-
-    /**
-     * Friend requests sent by this user.
-     */
-    public function sentFriendRequests(): HasMany
-    {
-        return $this->hasMany(FriendRequest::class, 'sender_id');
+        return $this->hasMany(Notification::class, 'user_id')->latest();
     }
 
     /**
-     * Friend requests received by this user.
+     * Payments this user verified as an administrator.
      */
-    public function receivedFriendRequests(): HasMany
+    public function verifiedPayments(): HasMany
     {
-        return $this->hasMany(FriendRequest::class, 'receiver_id');
+        return $this->hasMany(Payment::class, 'verified_by');
     }
 
-    /**
-     * Get all accepted friends (users who have accepted this user's request).
-     */
-    public function friendsOfMine(): HasMany
+    // ===== Helpers =====
+
+    public function isAdmin(): bool
     {
-        return $this->hasMany(FriendRequest::class, 'sender_id')->where('status', 'accepted');
+        return (bool) $this->is_admin;
     }
 
-    /**
-     * Get all accepted friends (users whose requests this user has accepted).
-     */
-    public function friendsOf(): HasMany
+    public function isCustomer(): bool
     {
-        return $this->hasMany(FriendRequest::class, 'receiver_id')->where('status', 'accepted');
+        return ! $this->isAdmin();
     }
 
-    /**
-     * Get all friends of this user.
-     */
-    public function friends()
+    public function unreadNotificationsCount(): int
     {
-        return $this->friendsOfMine()->with('receiver')
-            ->get()
-            ->map(function ($request) {
-                return $request->receiver;
-            })
-            ->concat(
-                $this->friendsOf()->with('sender')
-                    ->get()
-                    ->map(function ($request) {
-                        return $request->sender;
-                    })
-            );
+        return $this->notifications()->where('is_read', false)->count();
+    }
+
+    public function initials(): string
+    {
+        $parts = preg_split('/\s+/', trim((string) $this->name)) ?: [];
+        $initials = '';
+
+        foreach (array_slice($parts, 0, 2) as $part) {
+            $initials .= mb_strtoupper(mb_substr($part, 0, 1));
+        }
+
+        return $initials !== '' ? $initials : 'C';
     }
 }
