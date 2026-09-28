@@ -51,6 +51,57 @@ class ManualPaymentTest extends TestCase
         $this->assertDatabaseHas('notifications', ['user_id' => $admin->id]);
     }
 
+    public function test_payment_page_offers_screenshot_preview_and_remove(): void
+    {
+        $customer = $this->makeCustomer();
+        $this->makePaymentMethod();
+        $booking = $this->makeBooking($customer, $this->makeVehicle());
+
+        $response = $this->actingAs($customer)->get(route('bookings.payment', $booking));
+
+        $response->assertOk();
+
+        // The file input is visually hidden but still focusable, so `required` keeps working.
+        $response->assertSee('class="upload-wrap', false);
+        $response->assertSee('class="sr-only" required data-image-input', false);
+
+        // Preview shell, filled in by FileReader once a file is chosen.
+        $response->assertSee('data-image-preview', false);
+        $response->assertSee('data-preview-img', false);
+        $response->assertSee('data-preview-name', false);
+        $response->assertSee('data-preview-size', false);
+
+        // Remove action and a slot for client side validation messages.
+        $response->assertSee('data-preview-remove', false);
+        $response->assertSee('id="payment_proof_error"', false);
+
+        $response->assertSee('FileReader', false);
+        $response->assertSee('MAX_BYTES = 3 * 1024 * 1024', false);
+        $response->assertSee('Remove', false);
+    }
+
+    public function test_payment_page_shows_the_upload_error_after_a_failed_submission(): void
+    {
+        $customer = $this->makeCustomer();
+        $method = $this->makePaymentMethod();
+        $booking = $this->makeBooking($customer, $this->makeVehicle());
+
+        $this->actingAs($customer)->post(route('payments.submit'), [
+            'booking_id' => $booking->id,
+            'payment_method_id' => $method->id,
+            'amount' => $booking->total_amount,
+            'transaction_id' => 'BKS7777777',
+            // payment_proof deliberately missing
+            'agree_terms' => '1',
+        ])->assertSessionHasErrors('payment_proof');
+
+        $response = $this->actingAs($customer)->get(route('bookings.payment', $booking));
+
+        $response->assertOk();
+        $response->assertSee('has-error', false);
+        $response->assertSee('Please attach the payment screenshot.', false);
+    }
+
     public function test_uploaded_payment_proof_is_served_through_the_media_route(): void
     {
         Storage::fake('public');

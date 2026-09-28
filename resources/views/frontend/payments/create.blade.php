@@ -30,13 +30,37 @@
 
     .instructions { background: var(--light); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; font-size: .87rem; white-space: pre-line; }
 
+    .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+        clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
     .upload-box {
-        border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 22px; text-align: center;
-        background: var(--light); cursor: pointer;
+        display: block; border: 1.5px dashed var(--border); border-radius: var(--radius); padding: 22px;
+        text-align: center; background: var(--light); cursor: pointer; transition: border-color .15s ease, background .15s ease;
     }
     .upload-box:hover { border-color: var(--primary); }
-    .upload-preview { margin-top: 14px; display: none; }
-    .upload-preview img { max-height: 210px; border-radius: var(--radius); border: 1px solid var(--border); margin: 0 auto; }
+    .upload-wrap:focus-within .upload-box { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+    .upload-box .upload-icon { font-size: 1.6rem; line-height: 1; color: var(--muted); }
+    .upload-box strong { display: block; margin: 6px 0 2px; font-size: .92rem; }
+    .upload-box.has-file { border-style: solid; border-color: var(--success); background: var(--success-soft); }
+    .upload-box.has-file .upload-icon { color: var(--success); }
+    .upload-wrap.has-error .upload-box { border-color: var(--danger); background: var(--danger-soft); }
+
+    .upload-preview { margin-top: 14px; display: none; text-align: center; }
+    .upload-preview.is-visible { display: block; }
+    .upload-preview img {
+        display: block; max-width: 100%; max-height: 240px; margin: 0 auto;
+        border-radius: var(--radius); border: 1px solid var(--border); background: var(--light);
+    }
+    .upload-meta {
+        display: flex; align-items: center; justify-content: center; gap: 8px 14px; flex-wrap: wrap;
+        margin-top: 10px; font-size: .84rem;
+    }
+    .upload-meta .filename {
+        display: inline-flex; align-items: center; gap: 7px; font-weight: 600; color: var(--dark);
+        max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
 
     .status-steps { list-style: none; display: grid; gap: 14px; }
     .status-steps li { display: flex; gap: 12px; align-items: flex-start; font-size: .87rem; }
@@ -61,7 +85,7 @@
         .instructions { font-size: .83rem; padding: 14px; }
         .upload-box { padding: 18px; }
         .status-steps { gap: 12px; }
-        .panel img[alt] { width: 100%; height: 170px; }
+        .panel img[alt]:not([data-preview-img]) { width: 100%; height: 170px; }
     }
 
     @media (max-width: 420px) {
@@ -162,18 +186,28 @@
                             <div class="form-group full">
                                 <label for="payment_proof">Payment screenshot <span style="color:var(--danger)">*</span></label>
 
-                                <label class="upload-box" for="payment_proof">
-                                    <div style="font-size:1.6rem;"><i class="bi bi-camera"></i></div>
-                                    <strong style="display:block; margin:6px 0 2px; font-size:.92rem;">Click to upload a screenshot</strong>
-                                    <span class="muted small">JPG, PNG or WEBP · maximum 3 MB</span>
-                                </label>
+                                <div class="upload-wrap @error('payment_proof') has-error @enderror">
+                                    <label class="upload-box" for="payment_proof" data-upload-box>
+                                        <span class="upload-icon"><i class="bi bi-camera"></i></span>
+                                        <strong data-upload-title>Click to upload a screenshot</strong>
+                                        <span class="muted small">JPG, PNG or WEBP · maximum 3 MB</span>
+                                    </label>
 
-                                <input type="file" id="payment_proof" name="payment_proof" accept="image/png,image/jpeg,image/webp"
-                                       class="form-control mt-8 @error('payment_proof') is-invalid @enderror" required data-image-input>
-                                @error('payment_proof')<span class="form-error">{{ $message }}</span>@enderror
+                                    <input type="file" id="payment_proof" name="payment_proof" accept="image/png,image/jpeg,image/webp"
+                                           class="sr-only" required data-image-input>
+                                </div>
 
-                                <div class="upload-preview text-center" data-image-preview>
-                                    <img src="" alt="Payment screenshot preview">
+                                <span class="form-error" id="payment_proof_error" @if(! $errors->has('payment_proof')) hidden @endif>{{ $errors->first('payment_proof') }}</span>
+
+                                <div class="upload-preview" data-image-preview>
+                                    <img alt="Payment screenshot preview" data-preview-img>
+                                    <div class="upload-meta">
+                                        <span class="filename"><i class="bi bi-file-earmark-image"></i><span data-preview-name></span></span>
+                                        <span class="muted small" data-preview-size></span>
+                                        <button type="button" class="btn btn-light btn-sm" data-preview-remove>
+                                            <i class="bi bi-trash3"></i> Remove
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -261,6 +295,83 @@
             radio.addEventListener('change', updateInstructions);
         });
         updateInstructions();
+
+        // Payment screenshot preview with a remove action.
+        var proofInput = document.querySelector('[data-image-input]');
+        var proofPreview = document.querySelector('[data-image-preview]');
+        var proofBox = document.querySelector('[data-upload-box]');
+        var proofTitle = document.querySelector('[data-upload-title]');
+        var proofName = document.querySelector('[data-preview-name]');
+        var proofSize = document.querySelector('[data-preview-size]');
+        var proofImg = document.querySelector('[data-preview-img]');
+        var proofRemove = document.querySelector('[data-preview-remove]');
+        var proofError = document.getElementById('payment_proof_error');
+        var MAX_BYTES = 3 * 1024 * 1024;
+        var ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+        function formatSize(bytes) {
+            if (bytes < 1024) { return bytes + ' B'; }
+            if (bytes < 1024 * 1024) { return Math.round(bytes / 1024) + ' KB'; }
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+
+        function setProofError(message) {
+            if (!proofError) { return; }
+            proofError.textContent = message || '';
+            proofError.hidden = !message;
+        }
+
+        function clearProof() {
+            if (!proofInput) { return; }
+            proofInput.value = '';
+            proofPreview.classList.remove('is-visible');
+            proofBox.classList.remove('has-file');
+            proofTitle.textContent = 'Click to upload a screenshot';
+            proofName.textContent = '';
+            proofSize.textContent = '';
+            proofImg.removeAttribute('src');
+        }
+
+        if (proofInput && proofPreview && proofRemove) {
+            proofInput.addEventListener('change', function () {
+                var file = proofInput.files && proofInput.files[0];
+
+                if (!file) {
+                    clearProof();
+                    setProofError('');
+                    return;
+                }
+
+                if (ALLOWED_TYPES.indexOf(file.type) === -1) {
+                    clearProof();
+                    setProofError('The payment screenshot must be a JPG, PNG or WEBP image.');
+                    return;
+                }
+
+                if (file.size > MAX_BYTES) {
+                    clearProof();
+                    setProofError('The payment screenshot may not be larger than 3 MB.');
+                    return;
+                }
+
+                setProofError('');
+                proofName.textContent = file.name;
+                proofSize.textContent = formatSize(file.size);
+                proofBox.classList.add('has-file');
+                proofTitle.textContent = 'Click to replace the screenshot';
+                proofPreview.classList.add('is-visible');
+
+                var reader = new FileReader();
+                reader.onload = function (event) { proofImg.src = event.target.result; };
+                reader.readAsDataURL(file);
+            });
+
+            proofRemove.addEventListener('click', function () {
+                clearProof();
+                setProofError('');
+                proofInput.focus();
+            });
+        }
     });
 </script>
 @endpush

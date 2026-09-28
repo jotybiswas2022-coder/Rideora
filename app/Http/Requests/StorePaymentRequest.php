@@ -42,6 +42,7 @@ class StorePaymentRequest extends FormRequest
         return [
             'payment_method_id.exists' => 'The selected payment method is not available.',
             'transaction_id.regex' => 'Transaction ID may only contain letters, numbers, dashes and slashes.',
+            'payment_proof.required' => 'Please attach the payment screenshot.',
             'payment_proof.max' => 'The payment screenshot may not be larger than 3 MB.',
             'payment_proof.mimes' => 'The payment screenshot must be a JPG, PNG or WEBP image.',
             'agree_terms.accepted' => 'Please confirm the submitted information is accurate.',
