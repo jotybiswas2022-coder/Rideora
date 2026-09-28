@@ -39,7 +39,9 @@
     .how-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
     .how-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; position: relative; }
     .how-num {
-        font-size: 1.7rem; font-weight: 800; color: #DBEAFE; letter-spacing: -.04em; display: block; margin-bottom: 10px;
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px; border-radius: 12px; background: var(--primary-soft); color: var(--primary);
+        font-size: .95rem; font-weight: 800; letter-spacing: .02em; margin-bottom: 14px;
     }
     .how-card h3 { font-size: 1rem; margin-bottom: 6px; }
     .how-card p { font-size: .87rem; color: var(--muted); }
