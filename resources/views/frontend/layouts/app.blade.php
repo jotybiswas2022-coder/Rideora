@@ -33,6 +33,11 @@
             --shadow: 0 6px 24px rgba(15, 23, 42, .07);
             --shadow-lg: 0 18px 40px rgba(15, 23, 42, .12);
             --container: 1180px;
+            --ease-out: cubic-bezier(.22, .61, .36, 1);
+            --ease-spring: cubic-bezier(.34, 1.4, .64, 1);
+            --dur-fast: .16s;
+            --dur: .24s;
+            --dur-slow: .55s;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -120,6 +125,67 @@
         .card-body { padding: 24px; }
         .card-foot { padding: 16px 24px; border-top: 1px solid var(--border); background: #fcfdff; border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
 
+        /* ============ Vehicle card (shared by home + listing) ============ */
+        .v-card {
+            position: relative;
+            background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+            display: flex; flex-direction: column; height: 100%;
+            transition: transform .22s var(--ease-out, ease), box-shadow .22s var(--ease-out, ease), border-color .22s ease;
+        }
+        .v-card:hover { transform: translateY(-4px); border-color: #CBD5E1; box-shadow: var(--shadow-lg); }
+        .v-card:focus-within { border-color: var(--primary); }
+        @supports selector(:has(*)) {
+            .v-card:has(a:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+        }
+        /* The title link covers the whole card, so the image and specs stay one tap target */
+        .v-card-title h3 a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+        .v-card-cta { position: relative; z-index: 2; }
+
+        .v-card-media { position: relative; aspect-ratio: 16 / 10; background: #EEF2F7; overflow: hidden; display: block; }
+        .v-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease-out, ease); }
+        .v-card:hover .v-card-media img { transform: scale(1.06); }
+        .v-card-badge {
+            position: absolute; top: 12px; left: 12px; color: #fff;
+            font-size: .7rem; font-weight: 700; padding: 5px 11px; border-radius: 999px; letter-spacing: .02em;
+            display: inline-flex; align-items: center; gap: 5px;
+        }
+        .v-card-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+        .v-card-badge.is-open { background: rgba(22, 163, 74, .95); }
+        .v-card-badge.is-busy { background: rgba(180, 83, 9, .95); }
+        .v-card-tag {
+            position: absolute; top: 12px; right: 12px; background: rgba(15, 23, 42, .74); color: #fff;
+            font-size: .7rem; font-weight: 600; padding: 5px 11px; border-radius: 999px; backdrop-filter: blur(6px);
+        }
+        .v-card-zoom {
+            position: absolute; right: 12px; bottom: 12px; width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(255, 255, 255, .94); color: var(--primary); display: inline-flex; align-items: center;
+            justify-content: center; font-size: .9rem; box-shadow: var(--shadow-sm);
+            opacity: 0; transform: translateY(6px); transition: opacity .22s ease, transform .22s ease;
+        }
+        .v-card:hover .v-card-zoom, .v-card:focus-within .v-card-zoom { opacity: 1; transform: none; }
+
+        .v-card-body { padding: 18px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
+        .v-card-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+        .v-card-title h3 { font-size: 1.03rem; line-height: 1.3; }
+        .v-card-title h3 a { color: var(--dark); }
+        .v-card-title h3 a:hover { color: var(--primary); }
+        .v-card-sub { font-size: .82rem; color: var(--muted); margin-top: -6px; }
+        .v-card-rating { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; color: var(--muted); flex-shrink: 0; }
+        .v-card-rating .num { font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+        .v-card-specs { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; }
+        .v-card-specs li {
+            display: inline-flex; align-items: center; gap: 6px; background: var(--light); border: 1px solid var(--border);
+            padding: 5px 10px; border-radius: 999px; font-size: .76rem; color: var(--muted); white-space: nowrap;
+        }
+        .v-card-location { font-size: .8rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+        .v-card-foot {
+            margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        }
+        .v-card-price strong { font-size: 1.15rem; color: var(--dark); font-variant-numeric: tabular-nums; }
+        .v-card-price .per { font-size: .78rem; color: var(--muted); }
+        .v-card-price .alt { display: block; font-size: .76rem; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
+
         /* ============ Badges ============ */
         .badge {
             display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px;
@@ -151,6 +217,10 @@
         select.form-control { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path fill='%2364748b' d='M6 8.5 1.5 4h9z'/></svg>"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
         .form-hint { font-size: .78rem; color: var(--muted); }
         .form-error { font-size: .78rem; color: var(--danger); font-weight: 600; }
+        /* iOS Safari zooms the whole viewport when focusing any input under 16px */
+        @media (pointer: coarse) {
+            .form-control { font-size: 16px; }
+        }
         .checkbox-row { display: flex; align-items: flex-start; gap: 10px; font-size: .85rem; color: var(--text); }
         .checkbox-row input { width: 17px; height: 17px; margin-top: 2px; accent-color: var(--primary); flex-shrink: 0; }
         .form-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
@@ -196,6 +266,20 @@
         .mt-8 { margin-top: 8px; } .mt-16 { margin-top: 16px; } .mt-24 { margin-top: 24px; } .mt-32 { margin-top: 32px; }
         .mb-8 { margin-bottom: 8px; } .mb-16 { margin-bottom: 16px; } .mb-24 { margin-bottom: 24px; }
         .divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+        /* Visually hidden but announced by screen readers */
+        .sr-only {
+            position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+            overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+        }
+
+        /* Keyboard-only focus ring — never removed, only scoped to :focus-visible */
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+        .btn:focus-visible, .form-control:focus-visible { outline-offset: 3px; }
 
         .page-header { margin-bottom: 26px; }
         .page-header h1 { font-size: 1.6rem; margin-bottom: 4px; }
@@ -250,25 +334,34 @@
             .section-head { margin-bottom: 24px; }
             .btn { padding: 10px 16px; font-size: .88rem; }
             .btn-lg { padding: 12px 20px; font-size: .94rem; }
-            .btn-sm { padding: 7px 11px; font-size: .78rem; }
+            /* Keep every control at least a 44px tap target on touch screens */
+            .btn-sm { padding: 11px 14px; font-size: .8rem; min-height: 44px; }
+            /* 16px stops iOS Safari from zoom-jumping the viewport on focus */
+            .form-control { font-size: 16px; padding: 12px 14px; min-height: 46px; }
+            select.form-control { padding-right: 36px; }
+            label { font-size: .82rem; }
+            .checkbox-row { min-height: 44px; align-items: center; }
+            .checkbox-row input { width: 20px; height: 20px; margin-top: 0; }
             .alert { padding: 11px 13px; font-size: .85rem; }
             .summary-row { font-size: .86rem; }
             .summary-row.total { font-size: .98rem; }
             .empty-state { padding: 34px 18px; }
             .pagination-wrap span[aria-current="page"] > span,
-            .pagination-wrap a { min-width: 34px; height: 34px; padding: 0 9px; font-size: .8rem; }
+            .pagination-wrap a { min-width: 40px; height: 40px; padding: 0 9px; font-size: .8rem; }
             .form-actions { flex-direction: column; align-items: stretch; }
             .form-actions .btn { width: 100%; }
             .flex-between { gap: 10px; }
+            .v-card-foot { flex-direction: column; align-items: stretch; gap: 10px; }
+            .v-card-foot .btn { width: 100%; }
         }
 
         /* Small phones */
         @media (max-width: 420px) {
             .container { padding: 0 14px; }
             h1, h2, h3 { overflow-wrap: anywhere; }
-            .btn { padding: 9px 13px; font-size: .85rem; }
+            .btn { padding: 11px 13px; font-size: .85rem; }
             .badge { font-size: .7rem; padding: 4px 9px; }
-            .form-control { padding: 10px 12px; font-size: .9rem; }
+            .form-control { padding: 12px 12px; font-size: 16px; }
         }
     </style>
 

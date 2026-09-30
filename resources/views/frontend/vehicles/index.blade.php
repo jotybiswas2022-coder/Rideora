@@ -30,35 +30,6 @@
     }
     .chip a { color: inherit; opacity: .75; font-weight: 700; }
 
-    .v-card {
-        background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
-        display: flex; flex-direction: column; transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .v-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-    .v-card-media { position: relative; aspect-ratio: 16 / 10; background: #EEF2F7; overflow: hidden; }
-    .v-card-media img { width: 100%; height: 100%; object-fit: cover; }
-    .v-card-badge {
-        position: absolute; top: 12px; left: 12px; background: rgba(22, 163, 74, .95); color: #fff;
-        font-size: .7rem; font-weight: 700; padding: 5px 10px; border-radius: 999px;
-    }
-    .v-card-tag {
-        position: absolute; top: 12px; right: 12px; background: rgba(15, 23, 42, .78); color: #fff;
-        font-size: .7rem; font-weight: 600; padding: 5px 10px; border-radius: 999px;
-    }
-    .v-card-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-    .v-card-title { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
-    .v-card-title h3 { font-size: 1.03rem; margin-bottom: 2px; }
-    .v-card-rating { display: inline-flex; align-items: center; gap: 4px; font-size: .78rem; color: var(--muted); }
-    .v-card-specs { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
-    .v-card-specs li {
-        display: inline-flex; align-items: center; gap: 6px; background: var(--light); border: 1px solid var(--border);
-        padding: 5px 10px; border-radius: 999px; font-size: .76rem; color: var(--muted);
-    }
-    .v-card-location { font-size: .8rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-    .v-card-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .v-card-price strong { font-size: 1.15rem; color: var(--dark); }
-    .v-card-price .block { display: block; }
-
     @media (max-width: 980px) {
         .listing-layout { grid-template-columns: 1fr; gap: 20px; }
         .filters { position: static; display: none; }
@@ -77,8 +48,6 @@
     }
 
     @media (max-width: 420px) {
-        .v-card-foot { flex-direction: column; align-items: stretch; gap: 10px; }
-        .v-card-foot .btn { width: 100%; }
         .v-card-body { padding: 16px; }
         .filter-actions .btn { width: 100%; }
     }

@@ -33,7 +33,9 @@ class VehicleController extends Controller
             'return_date' => ['nullable', 'date_format:Y-m-d', 'after_or_equal:pickup_date'],
         ]);
 
-        $query = Vehicle::query()->listable()->with(['category', 'images', 'primaryImage']);
+        // `average_rating` is what the vehicle card reads, so it is always eager loaded.
+        $query = Vehicle::query()->listable()->with(['category', 'images', 'primaryImage'])
+            ->withAvg(['reviews as average_rating' => fn ($q) => $q->where('status', 'approved')], 'rating');
 
         $query->when($filters['q'] ?? null, function ($builder, $value) {
             $builder->where(function ($inner) use ($value) {
@@ -73,8 +75,7 @@ class VehicleController extends Controller
             'price_asc' => $query->orderBy('price_per_day'),
             'price_desc' => $query->orderByDesc('price_per_day'),
             'name_asc' => $query->orderBy('name'),
-            'rating' => $query->withAvg(['reviews as approved_avg_rating' => fn ($q) => $q->where('status', 'approved')], 'rating')
-                ->orderByDesc('approved_avg_rating'),
+            'rating' => $query->orderByDesc('average_rating'),
             default => $query->orderByDesc('created_at'),
         };
 
@@ -140,6 +141,7 @@ class VehicleController extends Controller
             ->where('id', '!=', $vehicle->id)
             ->where('category_id', $vehicle->category_id)
             ->with(['images', 'primaryImage'])
+            ->withAvg(['reviews as average_rating' => fn ($q) => $q->where('status', 'approved')], 'rating')
             ->take(3)
             ->get();
 

@@ -23,9 +23,20 @@ class HomeController extends Controller
         $featuredVehicles = Vehicle::query()
             ->listable()
             ->with(['category', 'images', 'primaryImage'])
+            ->withAvg(
+                ['reviews as average_rating' => fn ($query) => $query->where('status', 'approved')],
+                'rating'
+            )
             ->orderByDesc('created_at')
-            ->take(6)
+            ->take(8)
             ->get();
+
+        $locations = Vehicle::query()
+            ->listable()
+            ->whereNotNull('location')
+            ->distinct()
+            ->orderBy('location')
+            ->pluck('location');
 
         $testimonials = Review::query()
             ->approved()
@@ -42,7 +53,7 @@ class HomeController extends Controller
             'reviews' => Review::query()->approved()->count(),
         ];
 
-        return view('frontend.home', compact('categories', 'featuredVehicles', 'testimonials', 'stats'));
+        return view('frontend.home', compact('categories', 'featuredVehicles', 'testimonials', 'stats', 'locations'));
     }
 
     public function about(): View

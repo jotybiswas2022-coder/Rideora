@@ -5,7 +5,12 @@
         position: sticky; top: 0; z-index: 900; background: rgba(255, 255, 255, .94);
         backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
     }
-    .site-header .inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: var(--nav-h); }
+    .site-header .inner {
+        display: flex; align-items: center; justify-content: space-between; gap: 12px; height: var(--nav-h);
+        /* Keep content clear of notches and rounded display edges */
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+    }
     .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.28rem; color: var(--dark); letter-spacing: -.02em; }
     .brand:hover { color: var(--dark); }
     .brand-mark {
@@ -22,14 +27,15 @@
     .nav-links a.active { color: var(--primary); background: var(--primary-soft); }
     .nav-right { display: flex; align-items: center; gap: 10px; }
     .nav-toggle {
-        display: none; width: 42px; height: 42px; border: 1px solid var(--border); background: #fff;
+        display: none; width: 44px; height: 44px; border: 1px solid var(--border); background: #fff;
         border-radius: var(--radius-sm); cursor: pointer; font-size: 1.1rem; color: var(--dark); align-items: center; justify-content: center;
     }
+    .nav-toggle:hover { border-color: var(--primary); color: var(--primary); }
 
     /* Notification bell */
     .bell-wrap { position: relative; }
     .bell {
-        position: relative; width: 42px; height: 42px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+        position: relative; width: 44px; height: 44px; border-radius: var(--radius-sm); border: 1px solid var(--border);
         background: #fff; cursor: pointer; font-size: 1.05rem; display: inline-flex; align-items: center; justify-content: center;
     }
     .bell:hover { border-color: var(--primary); }
@@ -107,7 +113,7 @@
         .brand-mark svg { width: 17px; height: 17px; }
         .nav-right { gap: 8px; }
         .nav-right .btn { padding: 9px 13px; font-size: .84rem; }
-        .bell, .nav-toggle { width: 40px; height: 40px; }
+        .bell, .nav-toggle { width: 44px; height: 44px; }
         .account-btn { padding: 5px 9px 5px 5px; font-size: .84rem; }
         .avatar { width: 28px; height: 28px; }
 
