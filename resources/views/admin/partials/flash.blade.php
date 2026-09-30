@@ -1,22 +1,34 @@
-@if(session('success'))
-    <div class="alert alert-success" role="status">
-        <span><i class="bi bi-check-lg"></i></span>
-        <div>{{ session('success') }}</div>
-    </div>
-@endif
+@php
+    $sweetAlerts = [];
 
-@if(session('error'))
-    <div class="alert alert-error" role="alert">
-        <span><i class="bi bi-exclamation-triangle-fill"></i></span>
-        <div>{{ session('error') }}</div>
-    </div>
-@endif
+    if (session('success')) {
+        $sweetAlerts[] = ['icon' => 'success', 'message' => session('success')];
+    }
 
-@if(session('warning'))
-    <div class="alert alert-warning" role="alert">
-        <span><i class="bi bi-exclamation-triangle-fill"></i></span>
-        <div>{{ session('warning') }}</div>
-    </div>
+    if (session('error')) {
+        $sweetAlerts[] = ['icon' => 'error', 'message' => session('error')];
+    }
+
+    if (session('warning')) {
+        $sweetAlerts[] = ['icon' => 'warning', 'message' => session('warning')];
+    }
+
+    if (session('info')) {
+        $sweetAlerts[] = ['icon' => 'info', 'message' => session('info')];
+    }
+@endphp
+
+@if($sweetAlerts)
+    <div data-flash-messages="{{ json_encode($sweetAlerts) }}" hidden></div>
+
+    <noscript>
+        @foreach($sweetAlerts as $alert)
+            <div class="alert alert-{{ $alert['icon'] === 'success' ? 'success' : ($alert['icon'] === 'warning' ? 'warning' : ($alert['icon'] === 'error' ? 'error' : 'info')) }}" role="alert">
+                <span><i class="bi bi-info-lg"></i></span>
+                <div>{{ $alert['message'] }}</div>
+            </div>
+        @endforeach
+    </noscript>
 @endif
 
 @if($errors->any())

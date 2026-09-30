@@ -110,7 +110,8 @@
                                 <div class="actions">
                                     <a href="{{ route('admin.users.show', $customer) }}" class="btn btn-outline btn-sm">Open</a>
 
-                                    <form method="POST" action="{{ route('admin.users.toggle', $customer) }}">
+                                    <form method="POST" action="{{ route('admin.users.toggle', $customer) }}"
+                                          data-confirm="{{ $customer->status === 'active' ? 'Deactivate' : 'Activate' }} {{ $customer->name }}? They will not be able to log in while {{ $customer->status === 'active' ? 'inactive' : 'activated' }}.">
                                         @csrf
                                         <button type="submit" class="btn {{ $customer->status === 'active' ? 'btn-warning-soft' : 'btn-success' }} btn-sm">
                                             {{ $customer->status === 'active' ? 'Deactivate' : 'Activate' }}

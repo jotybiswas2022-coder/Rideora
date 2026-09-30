@@ -117,9 +117,11 @@
                             <td data-label="Status">
                                 {!! status_badge($vehicle->statusLabel(), $vehicle->statusClass()) !!}
 
-                                <form method="POST" action="{{ route('admin.vehicles.status', $vehicle) }}" class="mt-8">
+                                <form method="POST" action="{{ route('admin.vehicles.status', $vehicle) }}" class="mt-8"
+                                      data-confirm-select="Set {{ $vehicle->name }} to __value__?"
+                                      data-confirm-title="Update vehicle status">
                                     @csrf
-                                    <select name="status" class="form-control mini-select" onchange="this.form.submit()">
+                                    <select name="status" class="form-control mini-select">
                                         @foreach(\App\Models\Vehicle::STATUSES as $status)
                                             <option value="{{ $status }}" @selected($vehicle->status === $status)>{{ ucfirst($status) }}</option>
                                         @endforeach

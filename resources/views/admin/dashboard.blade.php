@@ -26,8 +26,29 @@
     .legend-track { height: 8px; border-radius: 999px; background: #F1F5F9; overflow: hidden; margin-top: 6px; }
     .legend-track span { display: block; height: 100%; border-radius: 999px; background: var(--primary); }
 
+    .pay-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+    .pay-row:last-child { padding-bottom: 0; border-bottom: none; }
+    .pay-row .who { min-width: 0; }
+    .pay-row .code { display: block; font-size: .9rem; }
+    .pay-row .side { text-align: right; flex-shrink: 0; }
+
     @media (max-width: 1150px) { .quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 620px) { .quick-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 760px) {
+        .quick-grid { gap: 10px; margin: 14px 0; }
+        .quick { padding: 11px 12px; gap: 10px; }
+        .quick .ico { width: 34px; height: 34px; border-radius: 10px; font-size: .92rem; }
+        .quick strong { font-size: .84rem; }
+        .quick span span { display: none; }
+        .status-legend { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; }
+        .legend-row { font-size: .8rem; }
+        .legend-track { height: 6px; margin-top: 4px; }
+    }
+
+    @media (max-width: 400px) {
+        .quick-grid { grid-template-columns: 1fr; }
+        .quick span span { display: inline; font-size: .74rem; }
+    }
 </style>
 @endpush
 
@@ -101,15 +122,18 @@
 
     <div class="grid grid-sidebar">
         <!-- ============ Revenue chart ============ -->
-        <div class="card">
+        <div class="card" data-fold data-fold-mobile>
             <div class="card-head">
                 <div>
                     <h3>Revenue — last 6 months</h3>
                     <p>Verified payments per month</p>
                 </div>
-                <a href="{{ route('admin.payments.index') }}" class="btn btn-outline btn-sm">All payments</a>
+                <div class="flex-center" style="gap: 8px;">
+                    <a href="{{ route('admin.payments.index') }}" class="btn btn-outline btn-sm">All payments</a>
+                    <button type="button" class="fold-btn" data-fold-toggle aria-expanded="true" aria-label="Toggle revenue chart"><i class="bi bi-chevron-down"></i></button>
+                </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" data-fold-body>
                 @php $maxRevenue = max(array_values($months) ?: [0]) ?: 1; @endphp
                 <div class="bar-chart">
                     @foreach($months as $month => $total)
@@ -124,14 +148,15 @@
         </div>
 
         <!-- ============ Booking status breakdown ============ -->
-        <div class="card">
+        <div class="card" data-fold data-fold-mobile>
             <div class="card-head">
                 <div>
                     <h3>Booking status</h3>
-                    <p>Distribution across all bookings</p>
+                    <p>{{ array_sum($statusStats) ?: 0 }} bookings in total</p>
                 </div>
+                <button type="button" class="fold-btn" data-fold-toggle aria-expanded="true" aria-label="Toggle booking status"><i class="bi bi-chevron-down"></i></button>
             </div>
-            <div class="card-body">
+            <div class="card-body" data-fold-body>
                 @php $totalBookings = array_sum($statusStats) ?: 0; @endphp
                 <div class="status-legend">
                     @foreach(\App\Models\Booking::STATUSES as $status)
@@ -167,107 +192,116 @@
     <div class="grid grid-sidebar">
         <div>
             <!-- ============ Recent bookings ============ -->
-            <div class="card">
+            <div class="card" data-fold data-fold-mobile>
                 <div class="card-head">
                     <div>
                         <h3>Recent bookings</h3>
                         <p>Latest six bookings across the platform</p>
                     </div>
-                    <a href="{{ route('admin.bookings.index') }}" class="btn btn-outline btn-sm">View all</a>
+                    <div class="flex-center" style="gap: 8px;">
+                        <a href="{{ route('admin.bookings.index') }}" class="btn btn-outline btn-sm">View all</a>
+                        <button type="button" class="fold-btn" data-fold-toggle aria-expanded="true" aria-label="Toggle recent bookings"><i class="bi bi-chevron-down"></i></button>
+                    </div>
                 </div>
 
-                <div class="table-wrap">
-                    <table class="data">
-                        <thead>
-                            <tr>
-                                <th>Booking</th>
-                                <th>Customer</th>
-                                <th>Vehicle</th>
-                                <th>Dates</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($recentBookings as $booking)
+                <div data-fold-body>
+                    <div class="table-wrap">
+                        <table class="data">
+                            <thead>
                                 <tr>
-                                    <td data-label="Booking"><strong>{{ $booking->booking_code }}</strong></td>
-                                    <td data-label="Customer">{{ $booking->user->name }}</td>
-                                    <td data-label="Vehicle">{{ $booking->vehicle->name }}</td>
-                                    <td class="small" data-label="Dates">
-                                        {{ $booking->pickup_date->format('d M') }} → {{ $booking->return_date->format('d M Y') }}
-                                    </td>
-                                    <td data-label="Total"><strong>{{ bdt($booking->total_amount) }}</strong></td>
-                                    <td data-label="Status">{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
-                                    <td>
-                                        <a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-outline btn-sm">Open</a>
-                                    </td>
+                                    <th>Booking</th>
+                                    <th>Customer</th>
+                                    <th>Vehicle</th>
+                                    <th>Dates</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th></th>
                                 </tr>
-                            @empty
-                                <tr><td colspan="7" class="text-center muted" style="padding:28px;">No bookings yet.</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse($recentBookings as $booking)
+                                    <tr>
+                                        <td data-label="Booking"><strong>{{ $booking->booking_code }}</strong></td>
+                                        <td data-label="Customer">{{ $booking->user->name }}</td>
+                                        <td data-label="Vehicle">{{ $booking->vehicle->name }}</td>
+                                        <td class="small" data-label="Dates">
+                                            {{ $booking->pickup_date->format('d M') }} → {{ $booking->return_date->format('d M Y') }}
+                                        </td>
+                                        <td data-label="Total"><strong>{{ bdt($booking->total_amount) }}</strong></td>
+                                        <td data-label="Status">{!! status_badge($booking->statusLabel(), $booking->statusClass()) !!}</td>
+                                        <td>
+                                            <a href="{{ route('admin.bookings.show', $booking) }}" class="btn btn-outline btn-sm">Open</a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="7" class="text-center muted" style="padding:28px;">No bookings yet.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
             <!-- ============ Top vehicles ============ -->
-            <div class="card">
+            <div class="card" data-fold data-fold-mobile>
                 <div class="card-head">
                     <div>
                         <h3>Most booked vehicles</h3>
                         <p>Ranked by total bookings</p>
                     </div>
+                    <button type="button" class="fold-btn" data-fold-toggle aria-expanded="true" aria-label="Toggle most booked vehicles"><i class="bi bi-chevron-down"></i></button>
                 </div>
-                <div class="table-wrap">
-                    <table class="data">
-                        <thead>
-                            <tr><th>Vehicle</th><th>Category</th><th>Daily rate</th><th>Bookings</th><th>Status</th></tr>
-                        </thead>
-                        <tbody>
-                            @forelse($topVehicles as $vehicle)
-                                <tr>
-                                    <td data-label="Vehicle">
-                                        <div class="cell-media">
-                                            <img src="{{ $vehicle->imageUrl() }}" alt="{{ $vehicle->name }}">
-                                            <span>
-                                                <strong>{{ $vehicle->name }}</strong>
-                                                <span>{{ $vehicle->registration_number }}</span>
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td data-label="Category">{{ $vehicle->category?->name ?? '—' }}</td>
-                                    <td data-label="Daily rate">{{ bdt($vehicle->price_per_day) }}</td>
-                                    <td data-label="Bookings"><strong>{{ $vehicle->bookings_count }}</strong></td>
-                                    <td data-label="Status">{!! status_badge($vehicle->statusLabel(), $vehicle->statusClass()) !!}</td>
-                                </tr>
-                            @empty
-                                <tr><td colspan="5" class="text-center muted" style="padding:28px;">No vehicles yet.</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                <div data-fold-body>
+                    <div class="table-wrap">
+                        <table class="data">
+                            <thead>
+                                <tr><th>Vehicle</th><th>Category</th><th>Daily rate</th><th>Bookings</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                @forelse($topVehicles as $vehicle)
+                                    <tr>
+                                        <td data-label="Vehicle">
+                                            <div class="cell-media">
+                                                <img src="{{ $vehicle->imageUrl() }}" alt="{{ $vehicle->name }}">
+                                                <span>
+                                                    <strong>{{ $vehicle->name }}</strong>
+                                                    <span>{{ $vehicle->registration_number }}</span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td data-label="Category">{{ $vehicle->category?->name ?? '—' }}</td>
+                                        <td data-label="Daily rate">{{ bdt($vehicle->price_per_day) }}</td>
+                                        <td data-label="Bookings"><strong>{{ $vehicle->bookings_count }}</strong></td>
+                                        <td data-label="Status">{!! status_badge($vehicle->statusLabel(), $vehicle->statusClass()) !!}</td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="5" class="text-center muted" style="padding:28px;">No vehicles yet.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- ============ Pending payments ============ -->
-        <div class="card">
+        <div class="card" data-fold data-fold-mobile>
             <div class="card-head">
                 <div>
                     <h3>Payments to verify</h3>
-                    <p>Manual verification queue</p>
+                    <p>{{ $pendingPayments->count() }} waiting for manual verification</p>
                 </div>
+                <button type="button" class="fold-btn" data-fold-toggle aria-expanded="true" aria-label="Toggle payments to verify"><i class="bi bi-chevron-down"></i></button>
             </div>
-            <div class="card-body">
+            <div class="card-body" data-fold-body>
                 @forelse($pendingPayments as $payment)
-                    <div class="flex-between mb-16" style="padding-bottom:16px; border-bottom:1px solid var(--border);">
-                        <div style="min-width:0;">
-                            <strong style="display:block; font-size:.9rem;">{{ $payment->booking->booking_code }}</strong>
+                    <div class="pay-row">
+                        <div class="who">
+                            <strong class="code">{{ $payment->booking->booking_code }}</strong>
                             <span class="muted small">{{ $payment->user->name }} · {{ $payment->paymentMethod?->name }}</span>
-                            <span class="muted small" style="display:block;">TrxID: {{ $payment->transaction_id }}</span>
+                            <span class="muted small" style="display: block;">TrxID: {{ $payment->transaction_id }}</span>
                         </div>
-                        <div class="text-right">
+                        <div class="side">
                             <strong>{{ bdt($payment->amount) }}</strong>
                             <div class="mt-8">
                                 <a href="{{ route('admin.payments.show', $payment) }}" class="btn btn-primary btn-sm">Verify</a>

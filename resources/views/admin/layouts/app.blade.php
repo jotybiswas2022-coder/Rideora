@@ -7,6 +7,7 @@
     <title>@yield('title', 'Admin') — {{ setting('site_name', 'Rideora') }}</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.22.4/dist/sweetalert2.all.min.js" defer></script>
 
     <style>
         /* ============ Rideora admin design system ============ */
@@ -235,6 +236,9 @@
         .empty-state .icon { font-size: 2rem; margin-bottom: 8px; }
         .empty-state h3 { margin-bottom: 6px; font-size: 1rem; color: var(--dark); }
 
+        /* ============ Collapsible sections (mobile only) ============ */
+        .fold-btn { display: none; }
+
         .filter-bar { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 22px; margin-bottom: 22px; }
         .filter-bar form { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; align-items: end; }
 
@@ -260,6 +264,25 @@
         .bar-wrap span { font-size: .74rem; color: var(--muted); }
         .bar-wrap strong { font-size: .78rem; color: var(--dark); }
 
+        /* ============ SweetAlert2 theming ============ */
+        .swal2-popup {
+            border-radius: var(--radius-lg) !important; font-family: inherit !important; padding: 26px 26px 22px !important;
+        }
+        .swal2-title { font-size: 1.15rem !important; font-weight: 700 !important; color: var(--dark) !important; }
+        .swal2-html-container { font-size: .9rem !important; color: var(--muted) !important; }
+        .swal2-confirm, .swal2-cancel {
+            border-radius: var(--radius-sm) !important; font-family: inherit !important; font-weight: 600 !important;
+            font-size: .86rem !important; padding: 10px 20px !important; margin: 0 !important; box-shadow: none !important;
+        }
+        .swal2-confirm { background: var(--primary) !important; }
+        .swal2-confirm.swal2-danger { background: var(--danger) !important; }
+        .swal2-cancel { background: #fff !important; color: var(--text) !important; border: 1px solid var(--border) !important; }
+        .swal2-icon { width: 3.2em !important; height: 3.2em !important; border-width: 4px !important; margin-bottom: 12px !important; }
+        .swal2-toast { border-radius: var(--radius) !important; box-shadow: var(--shadow) !important; font-family: inherit !important; }
+        .swal2-toast .swal2-title { font-size: .92rem !important; padding: 14px 18px 14px 56px !important; }
+        .swal2-toast .swal2-icon { margin: 0 !important; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); width: 2em !important; height: 2em !important; font-size: 1.5rem !important; border-width: 3px !important; }
+        .swal2-backdrop-show { backdrop-filter: blur(2px); }
+
         /* ============ Responsive ============ */
         @media (max-width: 1150px) {
             .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -277,61 +300,83 @@
             .sidebar-toggle { display: inline-flex; align-items: center; justify-content: center; }
             .form-grid, .form-grid-3, .filter-bar form { grid-template-columns: 1fr; }
             .admin-user .who { display: none; }
+            .card + .card, .card + .grid, .grid + .card, .grid + .grid { margin-top: 14px; }
+            .grid { gap: 14px; }
+            .card-head { padding: 12px 16px; }
+            .card-body, .card-pad { padding: 14px 16px; }
+            .card-foot { padding: 11px 16px; }
+            .card-head h3 { font-size: .95rem; }
+
+            /* Collapsible sections keep the page short on phones */
+            .card.is-folded [data-fold-body] { display: none; }
+            .fold-btn {
+                display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px;
+                border: 1px solid var(--border); background: #fff; border-radius: var(--radius-sm);
+                color: var(--muted); cursor: pointer; font-size: .8rem; flex-shrink: 0;
+            }
+            .fold-btn i { transition: transform .18s ease; }
+            .card.is-folded .fold-btn i { transform: rotate(-90deg); }
+            .card.is-folded .card-head { border-bottom-color: transparent; }
 
             /* Data tables become stacked cards so nothing needs sideways scrolling */
             .table-wrap { overflow-x: visible; }
-            table.data { min-width: 0; width: 100%; }
+            table.data { min-width: 0; width: 100%; font-size: .84rem; }
             table.data thead { display: none; }
             table.data, table.data tbody, table.data tr, table.data td { display: block; width: 100%; }
             table.data tr {
                 background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-                margin-bottom: 12px; padding: 6px 0; box-shadow: var(--shadow-sm);
+                margin-bottom: 10px; padding: 4px 0; box-shadow: var(--shadow-sm);
             }
             table.data tbody tr:hover { background: #fff; }
+
+            /* Label and value share one line instead of stacking, halving the row height */
             table.data td {
-                border: none; padding: 8px 14px; font-size: .86rem; display: block;
+                border: none; padding: 5px 14px; font-size: .84rem;
+                display: grid; grid-template-columns: minmax(64px, auto) 1fr; gap: 10px; align-items: center;
             }
             table.data td::before {
                 content: attr(data-label);
-                display: block; font-size: .7rem; font-weight: 700; letter-spacing: .07em;
-                text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+                font-size: .68rem; font-weight: 700; letter-spacing: .06em; line-height: 1.3;
+                text-transform: uppercase; color: var(--muted); margin-bottom: 0;
             }
             table.data td:not([data-label])::before { content: none; }
             table.data td[colspan]::before { content: none; }
+            table.data tr > td:first-child { font-weight: 700; font-size: .9rem; }
+            table.data tr > td:first-child::before { content: none; }
+            table.data tr > td:last-child:not(:first-child) { padding-top: 7px; }
             table.data .actions { flex-wrap: wrap; }
             table.data .actions form { flex: 1 1 auto; }
             table.data .actions .btn { width: 100%; }
-            table.data .cell-media img { width: 74px; height: 52px; }
+            table.data .cell-media img { width: 54px; height: 38px; }
         }
 
         @media (max-width: 620px) {
             .admin-content { padding: 16px 14px 36px; }
-            .card-head { padding: 14px 16px; }
-            .card-body, .card-pad { padding: 16px; }
-            .card-foot { padding: 13px 16px; }
             .filter-bar { padding: 16px; }
-            .stat { padding: 14px; }
-            .stat .val { font-size: 1.35rem; }
-            .stat .lbl { font-size: .68rem; }
+            .stat-grid { gap: 10px; }
+            .stat { padding: 11px 12px; gap: 1px; }
+            .stat .val { font-size: 1.25rem; }
+            .stat .lbl { font-size: .66rem; letter-spacing: .04em; }
+            .stat .note { font-size: .7rem; line-height: 1.3; }
             .filter-bar form { gap: 12px; }
             .pagination-wrap span[aria-current="page"] > span,
             .pagination-wrap a { min-width: 34px; height: 34px; padding: 0 9px; font-size: .8rem; }
             .form-actions { flex-direction: column; align-items: stretch; }
             .form-actions .btn { width: 100%; }
-            .bar-chart { gap: 6px; height: 165px; }
+            .bar-chart { gap: 6px; height: 160px; }
             .bar-wrap strong { font-size: .68rem; }
             .bar-wrap span { font-size: .64rem; }
             .bar { max-width: 40px; }
-            .empty-state { padding: 32px 16px; }
+            .empty-state { padding: 26px 14px; }
         }
 
         @media (max-width: 420px) {
-            .stat-grid { grid-template-columns: 1fr; }
             .admin-topbar { height: 60px; }
             .topbar-right { gap: 8px; }
             .sidebar-toggle, .admin-bell > button { width: 38px; height: 38px; }
             .admin-user { padding: 4px; }
             .badge { font-size: .68rem; padding: 4px 8px; }
+            .stat .val { font-size: 1.15rem; }
         }
     </style>
 
@@ -394,12 +439,134 @@
                 document.addEventListener('click', function () { panel.classList.remove('is-open'); });
             }
 
-            // Confirmation for destructive forms
+            // Confirmation for destructive forms, via SweetAlert2
             document.querySelectorAll('form[data-confirm]').forEach(function (form) {
                 form.addEventListener('submit', function (event) {
-                    if (!window.confirm(form.dataset.confirm)) {
-                        event.preventDefault();
+                    if (form.dataset.confirmed === '1') { return; }
+
+                    event.preventDefault();
+
+                    var button = form.querySelector('button[type="submit"]');
+                    var method = form.querySelector('input[name="_method"]');
+                    var destructive = method && method.value.toUpperCase() === 'DELETE';
+
+                    if (typeof window.Swal === 'undefined') {
+                        if (window.confirm(form.dataset.confirm)) {
+                            form.dataset.confirmed = '1';
+                            form.submit();
+                        }
+                        return;
                     }
+
+                    window.Swal.fire({
+                        title: form.dataset.confirmTitle
+                            || (button ? button.textContent.trim() : 'Are you sure?'),
+                        text: form.dataset.confirm,
+                        icon: destructive ? 'error' : 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: form.dataset.confirmOk
+                            || (button ? button.textContent.trim() : 'Yes, continue'),
+                        cancelButtonText: 'Cancel',
+                        reverseButtons: true,
+                        focusCancel: true,
+                        customClass: destructive ? { confirmButton: 'swal2-danger' } : {},
+                    }).then(function (result) {
+                        if (result.isConfirmed) {
+                            form.dataset.confirmed = '1';
+                            form.submit();
+                        }
+                    });
+                });
+            });
+
+            // Status dropdowns that auto-submit ask first, then revert if the admin cancels
+            document.querySelectorAll('form[data-confirm-select] select').forEach(function (select) {
+                select.dataset.previousValue = select.value;
+
+                select.addEventListener('change', function () {
+                    var form = select.closest('form');
+                    var chosen = select.options[select.selectedIndex].text.trim();
+                    var message = form.dataset.confirmSelect.replace('__value__', chosen);
+
+                    if (typeof window.Swal === 'undefined') {
+                        var fallback = window.confirm(message);
+                        select.value = fallback ? chosen : select.dataset.previousValue;
+                        if (fallback) { form.submit(); }
+                        return;
+                    }
+
+                    select.value = select.dataset.previousValue;
+
+                    window.Swal.fire({
+                        title: form.dataset.confirmTitle || 'Update status?',
+                        text: message,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: form.dataset.confirmOk || 'Update',
+                        cancelButtonText: 'Cancel',
+                        reverseButtons: true,
+                        focusCancel: true,
+                    }).then(function (result) {
+                        if (result.isConfirmed) {
+                            form.dataset.confirmed = '1';
+                            form.submit();
+                        }
+                    });
+                });
+            });
+
+            // Page feedback from flash messages, rendered as SweetAlert toasts
+            window.addEventListener('load', function () {
+                if (typeof window.Swal === 'undefined') { return; }
+
+                var host = document.querySelector('[data-flash-messages]');
+                if (!host) { return; }
+
+                var queue = [];
+
+                try {
+                    queue = JSON.parse(host.dataset.flashMessages || '[]');
+                } catch (error) {
+                    queue = [];
+                }
+
+                var toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3200,
+                    timerProgressBar: true,
+                    didOpen: function (element) {
+                        element.addEventListener('mouseenter', Swal.stopTimer);
+                        element.addEventListener('mouseleave', Swal.resumeTimer);
+                    },
+                });
+
+                queue.forEach(function (item, index) {
+                    setTimeout(function () {
+                        toast.fire({ icon: item.icon || 'success', title: item.message });
+                    }, index * 420);
+                });
+            });
+
+            // Collapsible sections: start folded on phones so the page stays short
+            var phones = window.matchMedia('(max-width: 760px)');
+
+            document.querySelectorAll('[data-fold]').forEach(function (card) {
+                var button = card.querySelector('[data-fold-toggle]');
+                if (!button) { return; }
+
+                function setFolded(folded) {
+                    card.classList.toggle('is-folded', folded);
+                    button.setAttribute('aria-expanded', folded ? 'false' : 'true');
+                }
+
+                if (phones.matches && card.hasAttribute('data-fold-mobile')) {
+                    setFolded(true);
+                }
+
+                button.addEventListener('click', function () {
+                    setFolded(!card.classList.contains('is-folded'));
                 });
             });
         });

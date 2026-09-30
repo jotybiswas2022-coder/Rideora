@@ -130,9 +130,11 @@
                                 <span class="muted small" style="display:block;">{{ $booking->paymentStatusLabel() }}</span>
                             </td>
                             <td data-label="Booking status">
-                                <form method="POST" action="{{ route('admin.bookings.status', $booking) }}">
+                                <form method="POST" action="{{ route('admin.bookings.status', $booking) }}"
+                                      data-confirm-select="Mark booking {{ $booking->booking_code }} as __value__?"
+                                      data-confirm-title="Update booking status">
                                     @csrf
-                                    <select name="booking_status" class="form-control mini-select" onchange="this.form.submit()">
+                                    <select name="booking_status" class="form-control mini-select">
                                         @foreach(\App\Models\Booking::STATUSES as $status)
                                             <option value="{{ $status }}" @selected($booking->booking_status === $status)>
                                                 {{ \Illuminate\Support\Str::headline($status) }}
