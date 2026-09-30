@@ -1,41 +1,74 @@
 <style>
     /* ============ Rideora footer ============ */
-    .site-footer { background: var(--dark); color: #CBD5E1; margin-top: auto; }
+    .site-footer {
+        background: var(--dark); color: #CBD5E1; margin-top: auto;
+        border-top: 1px solid rgba(255, 255, 255, .08);
+    }
     .site-footer .top { padding: 52px 0 30px; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 34px; }
-    .site-footer h4 { color: #fff; font-size: .95rem; margin-bottom: 14px; }
-    .site-footer p { font-size: .86rem; color: #94A3B8; }
-    .site-footer a { color: #CBD5E1; font-size: .87rem; }
+    .site-footer h4 {
+        color: #fff; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .site-footer p { font-size: .86rem; color: #94A3B8; line-height: 1.6; }
+    .site-footer a { color: #CBD5E1; font-size: .87rem; transition: color var(--dur-fast, .16s) ease; }
     .site-footer a:hover { color: #fff; }
+
     .footer-brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 1.2rem; margin-bottom: 12px; }
     .footer-brand .brand-mark { box-shadow: none; }
-    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-    .footer-contact { list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: .86rem; }
-    .footer-contact li { display: flex; gap: 9px; align-items: flex-start; }
-    .socials { display: flex; gap: 10px; margin-top: 16px; }
-    .socials a {
-        width: 36px; height: 36px; border-radius: 10px; background: rgba(255, 255, 255, .08);
-        display: inline-flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; color: #E2E8F0;
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .footer-links a { display: inline-flex; align-items: center; min-height: 34px; }
+
+    .footer-contact { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: .86rem; }
+    .footer-contact li { display: flex; gap: 10px; align-items: flex-start; color: #94A3B8; line-height: 1.5; }
+    .footer-contact .ico {
+        width: 30px; height: 30px; border-radius: 9px; background: rgba(255, 255, 255, .07); color: #93C5FD;
+        display: inline-flex; align-items: center; justify-content: center; font-size: .8rem; flex-shrink: 0;
     }
-    .socials a:hover { background: var(--primary); color: #fff; }
+    .footer-contact a { color: #CBD5E1; }
+
+    .socials { display: flex; gap: 9px; margin-top: 18px; }
+    .socials a {
+        width: 40px; height: 40px; border-radius: 11px; background: rgba(255, 255, 255, .08); color: #E2E8F0;
+        display: inline-flex; align-items: center; justify-content: center; font-size: 1rem;
+        transition: background var(--dur-fast, .16s) ease, color var(--dur-fast, .16s) ease, transform var(--dur-fast, .16s) ease;
+    }
+    .socials a:hover { background: var(--primary); color: #fff; transform: translateY(-2px); }
+
     .site-footer .bottom {
         border-top: 1px solid rgba(255, 255, 255, .1); padding: 18px 0; display: flex;
-        align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: .82rem; color: #94A3B8;
+        align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+        font-size: .82rem; color: #94A3B8;
     }
+    .site-footer .bottom .pay { display: inline-flex; align-items: center; gap: 7px; }
+    .site-footer .bottom .pay i { color: #6EE7B7; }
+
+    /* ============ Tablet: 2 x 2 ============ */
     @media (max-width: 900px) {
-        .site-footer .top { grid-template-columns: 1fr 1fr; gap: 26px; padding: 40px 0 24px; }
+        .site-footer .top { grid-template-columns: 1fr 1fr; gap: 26px 30px; padding: 40px 0 24px; }
     }
 
+    /* ============ Phone: brand full width, then two tight columns ============ */
     @media (max-width: 620px) {
-        .site-footer .top { grid-template-columns: 1fr; gap: 26px; padding: 34px 0 22px; }
-        .footer-brand { font-size: 1.1rem; }
-        .site-footer .bottom { flex-direction: column; align-items: flex-start; text-align: left; gap: 8px; }
+        .site-footer .top { grid-template-columns: 1fr 1fr; gap: 20px 18px; padding: 32px 0 20px; }
+        .footer-about, .footer-contact-col { grid-column: 1 / -1; }
+        .footer-brand { font-size: 1.1rem; margin-bottom: 8px; }
+        .site-footer p { font-size: .82rem; }
+        .site-footer h4 { margin-bottom: 8px; }
+        .footer-links a { min-height: 40px; font-size: .85rem; }
+        .footer-contact { gap: 8px; }
+        .footer-contact .ico { width: 28px; height: 28px; }
+        .socials { margin-top: 14px; }
+        .socials a { width: 44px; height: 44px; }
+        .site-footer .bottom {
+            flex-direction: column; align-items: flex-start; text-align: left; gap: 6px;
+            padding: 14px 0; font-size: .78rem;
+        }
     }
 </style>
 
 <footer class="site-footer">
     <div class="container">
         <div class="top">
-            <div>
+            <div class="footer-about">
                 <span class="footer-brand">
                     <span class="brand-mark" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -46,10 +79,18 @@
                 </span>
                 <p>{{ setting('site_tagline', 'Your Ride, Your Way.') }} Reliable vehicles, flexible rentals and simple booking with manual payment verification.</p>
                 <div class="socials">
-                    @if(setting('facebook_url'))<a href="{{ setting('facebook_url') }}" target="_blank" rel="noopener">FB</a>@endif
-                    @if(setting('instagram_url'))<a href="{{ setting('instagram_url') }}" target="_blank" rel="noopener">IG</a>@endif
-                    @if(setting('twitter_url'))<a href="{{ setting('twitter_url') }}" target="_blank" rel="noopener">X</a>@endif
-                    @if(setting('youtube_url'))<a href="{{ setting('youtube_url') }}" target="_blank" rel="noopener">YT</a>@endif
+                    @foreach([
+                        ['facebook_url', 'facebook', 'Facebook'],
+                        ['instagram_url', 'instagram', 'Instagram'],
+                        ['twitter_url', 'twitter-x', 'X (Twitter)'],
+                        ['youtube_url', 'youtube', 'YouTube'],
+                    ] as [$key, $icon, $label])
+                        @if(setting($key))
+                            <a href="{{ setting($key) }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $label }}">
+                                <i class="bi bi-{{ $icon }}" aria-hidden="true"></i>
+                            </a>
+                        @endif
+                    @endforeach
                 </div>
             </div>
 
@@ -82,19 +123,28 @@
                 </ul>
             </div>
 
-            <div>
+            <div class="footer-contact-col">
                 <h4>Contact</h4>
                 <ul class="footer-contact">
-                    <li><span><i class="bi bi-geo-alt"></i></span><span>{{ setting('office_address', 'Dhaka, Bangladesh') }}</span></li>
-                    <li><span><i class="bi bi-telephone"></i></span><span>{{ setting('support_phone', '+880 1700-000000') }}</span></li>
-                    <li><span><i class="bi bi-envelope-fill"></i></span><span>{{ setting('support_email', 'support@rideora.test') }}</span></li>
+                    <li>
+                        <span class="ico" aria-hidden="true"><i class="bi bi-geo-alt-fill"></i></span>
+                        <span>{{ setting('office_address', 'Dhaka, Bangladesh') }}</span>
+                    </li>
+                    <li>
+                        <span class="ico" aria-hidden="true"><i class="bi bi-telephone-fill"></i></span>
+                        <a href="tel:{{ preg_replace('/[^0-9+]/', '', (string) setting('support_phone', '+880 1700-000000')) }}">{{ setting('support_phone', '+880 1700-000000') }}</a>
+                    </li>
+                    <li>
+                        <span class="ico" aria-hidden="true"><i class="bi bi-envelope-fill"></i></span>
+                        <a href="mailto:{{ setting('support_email', 'support@rideora.test') }}">{{ setting('support_email', 'support@rideora.test') }}</a>
+                    </li>
                 </ul>
             </div>
         </div>
 
         <div class="bottom">
             <span>&copy; {{ date('Y') }} {{ setting('site_name', 'Rideora') }}. All rights reserved.</span>
-            <span>Manual payment verification &middot; bKash &middot; Nagad &middot; Bank Transfer</span>
+            <span class="pay"><i class="bi bi-shield-check" aria-hidden="true"></i>Manual payment verification &middot; bKash &middot; Nagad &middot; Bank Transfer</span>
         </div>
     </div>
 </footer>
