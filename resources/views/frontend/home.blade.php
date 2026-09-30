@@ -195,6 +195,7 @@
     }
     .how-card h3 { font-size: 1.02rem; margin-bottom: 7px; }
     .how-card p { font-size: .87rem; color: var(--muted); }
+    .how-body { min-width: 0; }
     .how-card .step-tag {
         display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
         font-size: .74rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--primary);
@@ -300,9 +301,24 @@
 
         .search-card { padding: 20px; border-radius: 18px; }
         .search-grid { grid-template-columns: 1fr; }
-        .how-grid, .testi-grid { grid-template-columns: 1fr; gap: 16px; }
-        .why-grid { grid-template-columns: 1fr; gap: 14px; }
-        .why-card { padding: 18px; }
+
+        /* Steps collapse into compact rows — the number sits beside the text
+           instead of above it, which roughly halves the section height. */
+        .how-grid { grid-template-columns: 1fr; gap: 12px; }
+        .how-card { display: flex; align-items: flex-start; gap: 14px; padding: 16px; }
+        .how-num { width: 38px; height: 38px; border-radius: 11px; font-size: .84rem; margin-bottom: 0; flex-shrink: 0; }
+        .how-body { flex: 1; }
+        .how-card h3 { font-size: .95rem; margin-bottom: 4px; }
+        .how-card p { font-size: .82rem; }
+        .step-tag { display: none; }
+
+        .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .why-card { flex-direction: column; gap: 10px; padding: 16px 14px; }
+        .why-ico { width: 38px; height: 38px; border-radius: 11px; font-size: 1.05rem; }
+        .why-card h3 { font-size: .9rem; margin-bottom: 4px; }
+        .why-card p { font-size: .8rem; }
+
+        .testi-grid { grid-template-columns: 1fr; gap: 16px; }
         .testi-card { padding: 20px; }
 
         .cta { padding: 30px 22px; border-radius: 18px; gap: 22px; }
@@ -547,9 +563,11 @@
                 ] as $index => $step)
                     <div class="how-card" data-reveal style="--reveal-delay: {{ $index * 70 }}ms">
                         <span class="how-num" aria-hidden="true">{{ $step[0] }}</span>
-                        <h3>{{ $step[1] }}</h3>
-                        <p>{{ $step[2] }}</p>
-                        <span class="step-tag"><i class="bi bi-arrow-right" aria-hidden="true"></i>{{ $step[3] }}</span>
+                        <div class="how-body">
+                            <h3>{{ $step[1] }}</h3>
+                            <p>{{ $step[2] }}</p>
+                            <span class="step-tag"><i class="bi bi-arrow-right" aria-hidden="true"></i>{{ $step[3] }}</span>
+                        </div>
                     </div>
                 @endforeach
             </div>
