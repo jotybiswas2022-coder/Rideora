@@ -1,4 +1,10 @@
-@php $bleed = $__bleed ?? false; @endphp
+@php
+    $bleed = $__bleed ?? false;
+    $hasFlash = session('success') || session('error') || session('warning') || session('status') || $errors->any();
+    // Only open the bleed wrapper when there is actually something to show,
+    // otherwise its top padding would add a gap above full-bleed sections.
+    $bleed = $bleed && $hasFlash;
+@endphp
 
 @if($bleed)
     <div class="container" style="padding-top: 20px;">

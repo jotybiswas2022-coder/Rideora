@@ -37,6 +37,9 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* The header is sticky, so keep anchored/scrolled targets clear of it. */
+        html { scroll-padding-top: 92px; -webkit-text-size-adjust: 100%; }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
             background: var(--light);
@@ -65,6 +68,8 @@
 
         .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 20px; }
         .page-shell { flex: 1; padding: 32px 0 64px; }
+        /* Full-bleed pages (e.g. the home hero) sit flush against the sticky navbar. */
+        .page-shell.is-flush { padding-top: 0; }
         .section { padding: 56px 0; }
         .section-tight { padding: 32px 0; }
 
@@ -230,6 +235,7 @@
             .section { padding: 40px 0; }
             .section-tight { padding: 26px 0; }
             .page-shell { padding: 22px 0 48px; }
+            .page-shell.is-flush { padding-top: 0; }
             .container { padding: 0 16px; }
         }
 
@@ -271,7 +277,7 @@
 <body>
     @include('frontend.layouts.navbar')
 
-    <main class="page-shell">
+    <main class="page-shell{{ trim((string) $__env->yieldContent('full-bleed')) !== '' ? ' is-flush' : '' }}">
         @if(trim((string) $__env->yieldContent('full-bleed')) !== '')
             @include('frontend.partials.flash', ['__bleed' => true])
             @yield('full-bleed')
