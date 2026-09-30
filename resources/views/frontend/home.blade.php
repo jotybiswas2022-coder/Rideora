@@ -142,6 +142,8 @@
 
     .fleet-marquee {
         position: relative;
+        /* Room for the hover lift + shadow — without this `overflow: hidden` crops the card tops */
+        padding: 12px 0;
         overflow: hidden;
         /* Fade the edges so cards enter and leave instead of clipping hard */
         -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3.5%, #000 96.5%, transparent 100%);
@@ -309,6 +311,7 @@
         .cta-points li { font-size: .8rem; }
 
         .fleet-group { gap: 14px; padding-right: 14px; }
+        .fleet-marquee { padding: 8px 0; }
         .fleet-group .v-card { width: 240px; flex: 0 0 240px; }
         .fleet-group .cat-card { width: 156px; flex: 0 0 156px; }
 
